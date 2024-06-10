@@ -1,13 +1,54 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&display=swap");
+
+/* ||RESET */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input,
+textarea,
+button {
+	font: inherit;
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* ||VARIABLES */
+:root {
+	/* COLORS */
+	--text-color: #000;
+	--background-color: #fff;
+	--light-grey: #f3f4f6;
+}
+
+[data-theme="dark"] {
+	/* COLORS */
+	--text-color: #fff;
+	--background-color: #000;
+	--light-grey: #2c2c2c;
+}
+
+/* ||UTILITY CLASSES */
+.center {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* ||GENERAL STYLES && CLASSES */
+html {
+	font-family: "Nunito", sans-serif;
+}
+
+body {
+	background-color: var(--background-color);
 }
