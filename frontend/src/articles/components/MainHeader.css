@@ -1,0 +1,45 @@
+.main-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.3rem 1rem;
+	margin: 0 1rem;
+}
+
+.main-header-title {
+	cursor: pointer;
+	font-size: 2rem;
+	font-family: "Orbitron", sans-serif;
+}
+
+.main-header-title a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+	color: var(--text-color);
+	text-decoration: none;
+}
+
+.blinker {
+	display: inline-block;
+	transform: scale(1.2, 1);
+	animation: blink ease 1s alternate infinite;
+	color: var(--accent-color);
+}
+
+@keyframes blink {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@media (min-width: 1024px) {
+	.main-header-title {
+		font-size: 3rem;
+	}
+}

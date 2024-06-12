@@ -27,6 +27,7 @@ img {
 	--text-color: #000;
 	--background-color: #fff;
 	--light-grey: #f3f4f6;
+	--accent-color: rgb(67, 250, 76);
 }
 
 [data-theme="dark"] {
@@ -50,5 +51,10 @@ html {
 }
 
 body {
+	transition: background-color, color, 0.5s;
+
+	color: var(--text-color);
 	background-color: var(--background-color);
+	max-width: 1279px;
+	margin: 0 auto;
 }
