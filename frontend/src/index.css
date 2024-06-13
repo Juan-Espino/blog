@@ -26,7 +26,7 @@ img {
 	/* COLORS */
 	--text-color: #000;
 	--background-color: #fff;
-	--light-grey: #f3f4f6;
+	--light-grey: #cccccc;
 	--accent-color: rgb(67, 250, 76);
 }
 
@@ -34,7 +34,7 @@ img {
 	/* COLORS */
 	--text-color: #fff;
 	--background-color: #000;
-	--light-grey: #2c2c2c;
+	--light-grey: #9b9b9b;
 }
 
 /* ||UTILITY CLASSES */
@@ -52,9 +52,14 @@ html {
 
 body {
 	transition: background-color, color, 0.5s;
-
 	color: var(--text-color);
 	background-color: var(--background-color);
 	max-width: 1279px;
 	margin: 0 auto;
+}
+
+svg {
+	width: 16px;
+	height: auto;
+	fill: currentColor;
 }

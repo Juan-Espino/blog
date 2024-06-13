@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./DarkMode.css";
 
-const DarkMode = (props) => {
-	const [theme, setTheme] = useState(false);
+const DarkMode = () => {
 	const setDarkMode = () => {
 		document.querySelector("body").setAttribute("data-theme", "dark");
 		localStorage.setItem("selectedTheme", "dark");
