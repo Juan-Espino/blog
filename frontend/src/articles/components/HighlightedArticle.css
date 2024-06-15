@@ -1,11 +1,18 @@
-.article {
+.article-hero {
 	position: relative;
+	position: sticky;
+	top: -1px;
 }
 
 img {
-	/* position: absolute;*/
-	z-index: -1;
 	object-fit: cover;
+}
+
+.article-img-wrapper {
+	/* position: sticky;
+	top: -1px; */
+	background-color: var(--background-color);
+	transition: background-color, 0.5s;
 }
 
 .article-metadata-wrapper {
@@ -14,6 +21,12 @@ img {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	transition: opacity, 0.5s;
 }
 
 .article-title {
@@ -24,24 +37,30 @@ img {
 .article-icon-date {
 	display: flex;
 	align-items: start;
+	justify-content: center;
 	column-gap: 0.3em;
 	color: var(--light-grey);
 }
 
-.article::after {
+.article-hero::after {
 	content: "";
 	display: block;
 	width: 100%;
 	height: 100%;
-	filter: blur(1px);
-	background-color: rgba(32, 32, 32, 0.6);
+	backdrop-filter: var(--blur);
+	background-color: var(--translucent);
 	position: absolute;
 	top: 0;
 	left: 0;
+	transition: backdrop-filter, background-color, opacity, 0.5s;
 }
 
-.article:active::after {
-	filter: blur(0px);
+.article-metadata-wrapper:active,
+.article-hero:active::after {
+	transition: backdrop-filter, background-color, opacity, 0.5s;
+	opacity: 0;
+}
 
-	background-color: rgba(182, 181, 181, 0);
+.decorations-off {
+	backdrop-filter: blur(100px);
 }

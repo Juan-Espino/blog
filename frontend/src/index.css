@@ -19,6 +19,7 @@ img {
 	display: block;
 	width: 100%;
 	height: auto;
+	border-radius: var(--img-border-radius);
 }
 
 /* ||VARIABLES */
@@ -26,8 +27,13 @@ img {
 	/* COLORS */
 	--text-color: #000;
 	--background-color: #fff;
-	--light-grey: #cccccc;
+	--light-grey: #5c5c5c;
 	--accent-color: rgb(67, 250, 76);
+	--translucent-rgba: 255;
+
+	/* MESUREMENTS */
+	--img-border-radius: 5%;
+	--blur: blur(2px);
 }
 
 [data-theme="dark"] {
@@ -35,6 +41,20 @@ img {
 	--text-color: #fff;
 	--background-color: #000;
 	--light-grey: #9b9b9b;
+	--translucent-rgba: 0;
+}
+
+[data-filter="unblur"] {
+	--blur: blur(0px);
+}
+
+[data-color="translucent"] {
+	--translucent: rgba(
+		var(--translucent-rgba),
+		var(--translucent-rgba),
+		var(--translucent-rgba),
+		0.5
+	);
 }
 
 /* ||UTILITY CLASSES */
@@ -45,13 +65,21 @@ img {
 	align-items: center;
 }
 
+.opacity-0 {
+	opacity: 0;
+}
+
+.opacity-1 {
+	opacity: 1;
+}
+
 /* ||GENERAL STYLES && CLASSES */
 html {
 	font-family: "Nunito", sans-serif;
 }
 
 body {
-	transition: background-color, color, 0.5s;
+	transition: background-color, color, opacity, backdrop, 0.5s;
 	color: var(--text-color);
 	background-color: var(--background-color);
 	max-width: 1279px;
