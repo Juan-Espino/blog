@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DarkMode from "./DarkMode";
+import DarkMode from "../ui/DarkMode";
 import "./MainHeader.css";
 
 const MainHeader = (props) => {

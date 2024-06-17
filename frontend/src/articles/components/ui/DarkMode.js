@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./DarkMode.css";
+import styles from "./DarkMode.module.css";
 
 const DarkMode = () => {
 	const setDarkMode = () => {
@@ -29,16 +29,16 @@ const DarkMode = () => {
 	}
 
 	return (
-		<div className="main-header-slider-wrapper center">
-			<label for="checkbox" className="slider-label">
+		<div className={`${styles["main-header-slider-wrapper"]} center`}>
+			<label for="checkbox" className={`${styles["slider-label"]}`}>
 				<input
 					type="checkbox"
-					className="slider-input"
+					className={`${styles["slider-input"]}`}
 					id="checkbox"
 					onChange={toggleTheme}
 					defaultChecked={selectedTheme === "dark"}
 				/>
-				<div className="slider"></div>
+				<div className={`${styles["slider"]}`}></div>
 			</label>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import React from "react";
-import HighlightedArticle from "../components/HighlightedArticle";
+import HighlightedArticle from "../components/highlighted/HighlightedArticle";
 import "./MainArticle.css";
 
 const MainArticle = (props) => {
