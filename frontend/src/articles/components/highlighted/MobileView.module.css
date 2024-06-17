@@ -60,3 +60,9 @@
 .decorations-off {
 	backdrop-filter: blur(100px);
 }
+
+/* Paragraph */
+.paragraph {
+	margin-top: 0.5em;
+	text-align: center;
+}
