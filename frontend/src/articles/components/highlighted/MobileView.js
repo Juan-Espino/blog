@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./MobileView.css";
+import styles from "./MobileView.module.css";
 
 const MobileView = (props) => {
 	const [scroll, setScroll] = useState(false);
@@ -14,20 +14,20 @@ const MobileView = (props) => {
 	}, []);
 	return (
 		<div
-			className="article-hero"
+			className={`${styles["article-hero"]}`}
 			data-filter={`${!scroll ? "blur" : "unblur"}`}
 			data-color={`${!scroll ? "translucent" : "nottranslucent"}`}
 		>
-			<div className="article-img-wrapper">
+			<div className={`${styles["article-img-wrapper"]}`}>
 				<img src={props.article.image} alt="props.article.title" />
 			</div>
 			<div
-				className={`article-metadata-wrapper ${
+				className={`${styles["article-metadata-wrapper"]} ${
 					scroll ? "opacity-0" : "opacity-1"
 				}`}
 			>
-				<h2 className="article-title">{props.article.title}</h2>
-				<div className="article-icon-date">
+				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
+				<div className={`${styles["article-icon-date"]}`}>
 					<svg
 						version="1.1"
 						id="Capa_1"
@@ -88,7 +88,7 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 							</g>
 						</g>
 					</svg>
-					<h4 className="article-date">{props.article.date}</h4>
+					<h4 className={`${styles["article-date"]}`}>{props.article.date}</h4>
 				</div>
 			</div>
 		</div>

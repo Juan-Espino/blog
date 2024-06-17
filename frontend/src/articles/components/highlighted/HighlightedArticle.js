@@ -1,7 +1,7 @@
 import React from "react";
 import MobileView from "./MobileView";
 
-import "./HighlightedArticle.css";
+import "./HighlightedArticle.module.css";
 const HighlightedArticle = (props) => {
 	return (
 		<React.Fragment>

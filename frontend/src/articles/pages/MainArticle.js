@@ -1,6 +1,6 @@
 import React from "react";
 import HighlightedArticle from "../components/highlighted/HighlightedArticle";
-import "./MainArticle.css";
+import styles from "./MainArticle.module.css";
 
 const MainArticle = (props) => {
 	const DUMMY_ARTICLES = [
@@ -15,7 +15,7 @@ const MainArticle = (props) => {
 		},
 	];
 	return (
-		<div className="main-article">
+		<div className={`${styles["main-article"]}`}>
 			<HighlightedArticle article={DUMMY_ARTICLES[0]} />
 		</div>
 	);
