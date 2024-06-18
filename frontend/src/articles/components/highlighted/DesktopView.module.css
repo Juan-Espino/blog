@@ -1,0 +1,31 @@
+.desktop-view {
+	display: none;
+	margin: 0 1em;
+}
+
+.article-hero img {
+	width: 40%;
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
+.article-icon-date {
+	display: flex;
+	align-items: start;
+	justify-content: start;
+	column-gap: 0.3em;
+	color: var(--light-grey);
+}
+
+.article-icon-date,
+.article-title {
+	margin-bottom: 10px;
+}
+@media screen and (min-width: 1024px) {
+	.desktop-view {
+		display: inline;
+	}
+	.article-title {
+		font-size: 2em;
+	}
+}

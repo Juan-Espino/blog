@@ -8,7 +8,6 @@ import {
 import MainArticle from "./articles/pages/MainArticle";
 import MainHeader from "./articles/components/nav/MainHeader";
 import NewArticle from "./articles/pages/NewArticle";
-
 const App = () => {
 	return (
 		<Router>

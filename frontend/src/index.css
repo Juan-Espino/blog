@@ -19,6 +19,8 @@ img {
 	display: block;
 	width: 100%;
 	height: auto;
+	max-height: 200px;
+	overflow: hidden;
 	border-radius: var(--img-border-radius);
 	object-fit: cover;
 }
@@ -33,7 +35,7 @@ img {
 	--translucent-rgba: 255;
 
 	/* MESUREMENTS */
-	--img-border-radius: 5%;
+	--img-border-radius: 0px;
 	--blur: blur(2px);
 }
 
@@ -87,8 +89,23 @@ body {
 	margin: 0 auto;
 }
 
+main {
+	margin: 1em 0em;
+}
+
 svg {
 	width: 16px;
 	height: auto;
 	fill: currentColor;
+}
+
+@media screen and (min-width: 1024px) {
+	/* Measurements */
+	:root {
+		--img-border-radius: 15px;
+	}
+
+	main {
+		margin: 2rem 2rem;
+	}
 }

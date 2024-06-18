@@ -13,7 +13,7 @@ const MobileView = (props) => {
 		});
 	}, []);
 	return (
-		<React.Fragment>
+		<div className={`${styles["mobile-view"]}`}>
 			{/* MobileView hero */}
 			<div
 				className={`${styles["article-hero"]}`}
@@ -100,7 +100,7 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 			</div>
 			{/* MobileView Paragraph */}
 			<p className={`${styles["paragraph"]}`}>{props.article.paragraph}</p>
-		</React.Fragment>
+		</div>
 	);
 };
 
