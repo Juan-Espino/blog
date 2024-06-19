@@ -1,0 +1,58 @@
+.card-li {
+	cursor: pointer;
+}
+.card-wrapper img {
+	width: 150px;
+	height: 120px;
+	border-radius: 15px;
+}
+
+.card-title {
+	margin-top: 0.3em;
+	font-size: 0.8em;
+	text-align: center;
+}
+
+.card-icon-date {
+	display: flex;
+	align-items: start;
+	justify-content: center;
+	column-gap: 0.3em;
+	color: var(--light-grey);
+	margin-top: 0.3em;
+}
+
+.card-icon-date p {
+	font-size: 0.7em;
+}
+
+.card-icon-date svg {
+	width: 13px;
+	height: 13px;
+}
+
+@media screen and (min-width: 1024px) {
+	.card-wrapper img {
+		width: 250px;
+		height: 150px;
+		border-radius: 15px;
+	}
+
+	.card-title {
+		font-size: 1em;
+		text-align: center;
+	}
+
+	.card-icon-date {
+		margin-top: 0.6em;
+	}
+
+	.card-icon-date p {
+		font-size: 0.8em;
+	}
+
+	.card-icon-date svg {
+		width: 15px;
+		height: 15px;
+	}
+}

@@ -33,6 +33,7 @@ img {
 	--light-grey: #5c5c5c;
 	--accent-color: rgb(67, 250, 76);
 	--translucent-rgba: 255;
+	--lastest-post-background-color: #f3f4f6;
 
 	/* MESUREMENTS */
 	--img-border-radius: 0px;
@@ -43,8 +44,9 @@ img {
 	/* COLORS */
 	--text-color: #fff;
 	--background-color: #000;
-	--light-grey: #9b9b9b;
+	--light-grey: #6e6e6e;
 	--translucent-rgba: 0;
+	--lastest-post-background-color: #111111;
 }
 
 [data-filter="unblur"] {
@@ -85,8 +87,9 @@ body {
 	transition: background-color, color, opacity, backdrop, 0.5s;
 	color: var(--text-color);
 	background-color: var(--background-color);
-	max-width: 1279px;
+	max-width: 1080px;
 	margin: 0 auto;
+	min-height: 100vh;
 }
 
 main {
