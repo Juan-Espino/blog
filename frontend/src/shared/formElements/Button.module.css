@@ -1,0 +1,12 @@
+.button-wrapper {
+	margin-top: 2em;
+}
+
+.button-wrapper button {
+	color: var(--text-color);
+	background-color: var(--background-color);
+	font-weight: bold;
+	padding: 0.2em 0.8em;
+	border: 1px solid var(--text-color);
+	border-radius: 8px;
+}

@@ -1,5 +1,7 @@
 import React from "react";
 import HighlightedArticle from "../components/highlighted/HighlightedArticle";
+import LastestPosts from "../components/ui/LastestPosts";
+
 import styles from "./MainArticle.module.css";
 
 const MainArticle = (props) => {
@@ -16,6 +18,7 @@ const MainArticle = (props) => {
 	return (
 		<div className={`${styles["main-article"]}`}>
 			<HighlightedArticle article={DUMMY_ARTICLES[0]} />
+			<LastestPosts articles={DUMMY_ARTICLES} />
 		</div>
 	);
 };

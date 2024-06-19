@@ -1,5 +1,7 @@
 import React from "react";
 
+import ReadMore from "./ReadMore";
+
 import styles from "./DesktopView.module.css";
 
 const DesktopView = (props) => {
@@ -71,7 +73,7 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 					<h4 className={`${styles["article-date"]}`}>{props.article.date}</h4>
 				</div>
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
-				<p className={`${styles["paragraph"]}`}>{props.article.paragraph}</p>
+				<ReadMore paragraph={props.article.paragraph} />
 			</div>
 		</div>
 	);
