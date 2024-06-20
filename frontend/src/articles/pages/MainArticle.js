@@ -1,10 +1,14 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import HighlightedArticle from "../components/highlighted/HighlightedArticle";
 import LastestPosts from "../components/ui/LastestPosts";
 
 import styles from "./MainArticle.module.css";
 
 const MainArticle = (props) => {
+	//might have to change url to /aID and read the url for the id
+	const articleId = useParams().articleId;
+
 	const DUMMY_ARTICLES = [
 		{
 			id: "a1",
@@ -36,12 +40,50 @@ const MainArticle = (props) => {
 			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
 			image: "https://facts.net/wp-content/uploads/2023/05/Naruto.jpeg",
 		},
+		{
+			id: "a5",
+			title: "Loli",
+			date: "12 oct, 2020",
+			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
+			image:
+				"https://i0.wp.com/themodelspotter.com/wp-content/uploads/2021/10/z_loli-bahia-stella.jpg?resize=1200%2C800&ssl=1",
+		},
 	];
+
+	let highlight;
+	let lastestPost;
+	let error = false;
+	//if there is an articleId
+	if (articleId) {
+		[highlight] = DUMMY_ARTICLES.filter((article) => article.id == articleId);
+		lastestPost = DUMMY_ARTICLES.filter((article) => article.id !== articleId);
+		if (!highlight) {
+			error = true;
+		}
+	} else {
+		//if articleId is undefined (default setting)
+		highlight = DUMMY_ARTICLES[0];
+		//remove highlighted article from articles array
+		lastestPost = DUMMY_ARTICLES.filter(
+			(article) => article.id !== highlight.id
+		);
+	}
+
 	return (
-		<div className={`${styles["main-article"]}`}>
-			<HighlightedArticle article={DUMMY_ARTICLES[0]} />
-			<LastestPosts articles={DUMMY_ARTICLES} />
-		</div>
+		<React.Fragment>
+			{error && (
+				<div className={`${styles["main-article"]}`}>
+					<h1>ERROR!! This is an invalid page please pick an article.</h1>
+					<LastestPosts articles={DUMMY_ARTICLES} />
+				</div>
+			)}
+			{!error && (
+				<div className={`${styles["main-article"]}`}>
+					<HighlightedArticle article={highlight} />
+					<LastestPosts articles={lastestPost} />
+				</div>
+			)}
+		</React.Fragment>
 	);
 };
 

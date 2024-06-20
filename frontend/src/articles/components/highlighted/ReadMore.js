@@ -13,7 +13,7 @@ const ReadMore = (props) => {
 
 	return (
 		<p className={`${styles["paragraph"]}`}>
-			{isReadMore ? text.slice(0, 200) + " ..." : text}
+			{isReadMore ? text.slice(0, 200) + "  ..." : text}
 			<Button
 				clickHandler={toggleReadMore}
 				text={isReadMore ? "Read More" : "Read Less"}

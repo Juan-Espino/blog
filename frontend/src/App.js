@@ -14,8 +14,9 @@ const App = () => {
 			<MainHeader />
 			<main>
 				<Routes>
-					<Route path="/" element={<MainArticle />} />
-					<Route path="/new" element={<NewArticle />} />
+					<Route path="/" exact element={<MainArticle />} />
+					<Route path="/:articleId" exact element={<MainArticle />} />
+					<Route path="/new" exact element={<NewArticle />} />
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
 			</main>
