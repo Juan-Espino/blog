@@ -4,9 +4,16 @@ import styles from "./Button.module.css";
 
 const Button = (props) => {
 	return (
-		<div className={`${styles["button-wrapper"]}`}>
-			<button onClick={props.clickHandler}>{props.text}</button>
-		</div>
+		<button
+			onClick={props.clickHandler}
+			disabled={props.disabled}
+			type={props.type}
+			className={`${styles["button-wrapper"]} ${
+				props.danger && styles["button-danger"]
+			} ${props.marginTop && styles["margin-top"]}`}
+		>
+			{props.text}
+		</button>
 	);
 };
 

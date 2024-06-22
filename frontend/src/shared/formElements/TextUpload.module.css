@@ -1,0 +1,35 @@
+.text-upload-wrapper {
+	margin-top: 2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 2em;
+}
+
+input {
+	width: 40%;
+	border-radius: var(--img-border-radius);
+	padding: 0.5em;
+}
+
+.text-checker {
+	font-weight: bold;
+	border-radius: 8px;
+	border: 1px solid var(--text-color);
+	width: 108px;
+	/* height: 30px; */
+	text-align: center;
+	padding-top: 2px;
+}
+
+.error {
+	border: 1px solid red;
+	color: red;
+}
+
+.textarea {
+	height: 20em;
+	width: 40%;
+	border-radius: var(--img-border-radius);
+	padding: 0.5em;
+}

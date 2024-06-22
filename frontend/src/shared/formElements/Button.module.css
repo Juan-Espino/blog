@@ -1,12 +1,26 @@
 .button-wrapper {
-	margin-top: 2em;
 }
 
-.button-wrapper button {
+button {
+	display: block;
 	color: var(--text-color);
 	background-color: var(--background-color);
 	font-weight: bold;
 	padding: 0.2em 0.8em;
 	border: 1px solid var(--text-color);
 	border-radius: 8px;
+}
+
+.button-danger {
+	color: red;
+	border: 1px solid red;
+}
+
+.margin-top {
+	margin-top: 2em;
+}
+
+.center {
+	display: flex;
+	justify-content: center;
 }
