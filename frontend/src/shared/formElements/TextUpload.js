@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TextUpload.module.css";
 const TextUpload = (props) => {
-	const [danger, setDanger] = useState(false);
-	const [dangerText, setDangerText] = useState();
-
-	const { type, onChange, id, ...inputProps } = props;
-
-	useEffect(() => {
-		if (danger) {
-			setDangerText("ERROR");
-		} else {
-			setDangerText("OK");
-		}
-	}, [danger]);
+	const { type, onChange, errorMessage, id, ...inputProps } = props;
 
 	return (
 		<div className={`${styles["text-upload-wrapper"]}`}>
@@ -29,9 +18,7 @@ const TextUpload = (props) => {
 					onChange={onChange}
 				/>
 			)}
-			<p className={`${styles["text-checker"]} ${danger && styles["error"]}`}>
-				{dangerText}
-			</p>
+			<span className={`${styles["error-message"]}`}>{errorMessage}</span>
 		</div>
 	);
 };

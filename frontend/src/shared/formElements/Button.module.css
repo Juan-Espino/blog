@@ -9,6 +9,7 @@ button {
 	padding: 0.2em 0.8em;
 	border: 1px solid var(--text-color);
 	border-radius: 8px;
+	cursor: pointer;
 }
 
 .button-danger {
@@ -23,4 +24,8 @@ button {
 .center {
 	display: flex;
 	justify-content: center;
+}
+
+button:disabled {
+	color: var(--light-grey);
 }

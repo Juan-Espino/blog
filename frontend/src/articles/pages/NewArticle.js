@@ -8,7 +8,7 @@ import Button from "../../shared/formElements/Button";
 
 const NewArticle = (props) => {
 	const [file, setFile] = useState();
-	//
+	const [fileExist, setFileExist] = useState(false);
 	const [values, setValues] = useState({
 		title: "",
 		paragraph: "",
@@ -20,20 +20,27 @@ const NewArticle = (props) => {
 			name: "title",
 			type: "text",
 			placeholder: "Title",
+			errorMessage: "Must be 1-40 characters!",
 			label: "Title",
+			pattern: "^[A-Za-z0-9_@]{1,40}$",
+			required: true,
 		},
 		{
 			id: 2,
 			name: "paragraph",
 			type: "textarea",
 			placeholder: "Paragraph",
+			errorMessage: "Needs to be atleast 300 characters!",
 			label: "Paragraph",
+			pattern: "^.{300,}$",
+			required: true,
 		},
 	];
 
 	//handler for image uploader
 	const inputHandler = (id, pickedFile, fileIsValid) => {
 		setFile(pickedFile);
+		setFileExist(true);
 		console.log(file);
 	};
 
@@ -45,11 +52,15 @@ const NewArticle = (props) => {
 	//handler for the whole new article form submission
 	const newArticleSubmitHandler = (e) => {
 		e.preventDefault();
+		if (!!file) {
+		}
 		const formData = new FormData();
 		formData.append("image", file);
 		formData.append("title", values.title);
 		formData.append("paragraph", values.paragraph);
-		console.log(formData.getAll());
+		for (const pair of formData.entries()) {
+			console.log(pair[0], pair[1]);
+		}
 
 		//check if file, title, paragraph, then enable add article submit button
 		//ON Add Article just log all info for now
@@ -73,7 +84,13 @@ const NewArticle = (props) => {
 				/>
 			))}
 			<div className={`${styles["button-wrapper"]}`}>
-				<Button key="sumbit" type="sumbit" text="Add Article" marginTop />
+				<Button
+					key="sumbit"
+					type="sumbit"
+					text="Add Article"
+					marginTop
+					disabled={!fileExist}
+				/>
 			</div>
 		</form>
 	);

@@ -28,10 +28,15 @@
 
 .image-upload {
 	margin-top: 1em;
-	/* transform: translateX(10vw); */
-
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	column-gap: 2em;
+	margin-bottom: 2em;
+}
+
+.image-upload button {
+	position: absolute;
+	bottom: -3em;
 }
