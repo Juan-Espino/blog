@@ -3,8 +3,14 @@ import React from "react";
 import ReadMore from "./ReadMore";
 
 import styles from "./DesktopView.module.css";
+import Button from "../../../shared/formElements/Button";
+import Modal from "../ui/Modal";
 
 const DesktopView = (props) => {
+	//handler for the edit button
+	const editClickHandler = () => {
+		console.log("ok");
+	};
 	return (
 		<div className={`${styles["desktop-view"]}`}>
 			<div className={`${styles["article-hero"]}`}>
@@ -74,6 +80,8 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 				</div>
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
 				<ReadMore paragraph={props.article.paragraph} />
+				<Button text="Edit" edit marginTop clickHandler={editClickHandler} />
+				<Modal />
 			</div>
 		</div>
 	);

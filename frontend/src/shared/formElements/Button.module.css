@@ -12,6 +12,11 @@ button {
 	cursor: pointer;
 }
 
+button:active {
+	color: var(--accent-color);
+	border: 1px solid var(--accent-color);
+}
+
 .button-danger {
 	color: red;
 	border: 1px solid red;
@@ -28,4 +33,9 @@ button {
 
 button:disabled {
 	color: var(--light-grey);
+}
+
+.edit {
+	color: orange;
+	border: 1px solid orange;
 }

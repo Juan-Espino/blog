@@ -11,6 +11,7 @@ const Button = (props) => {
 			className={`${styles["button-wrapper"]} ${
 				props.danger && styles["button-danger"]
 			} ${props.marginTop && styles["margin-top"]}
+			${props.edit && styles["edit"]}
 			${props.disabled && styles["disabled"]}`}
 		>
 			{props.text}
