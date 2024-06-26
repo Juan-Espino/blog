@@ -1,0 +1,7 @@
+.trash {
+	width: 56px;
+	height: 56px;
+	max-width: auto;
+	color: var(--text-color);
+	fill: var(--background-color);
+}

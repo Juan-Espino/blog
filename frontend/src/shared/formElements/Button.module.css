@@ -1,7 +1,12 @@
 .button-wrapper {
 }
 
-button {
+button:hover {
+	transform: scale(1.3);
+	transition: all 150ms;
+}
+
+.button {
 	display: block;
 	color: var(--text-color);
 	background-color: var(--background-color);
@@ -10,16 +15,17 @@ button {
 	border: 1px solid var(--text-color);
 	border-radius: 8px;
 	cursor: pointer;
-}
-
-button:active {
-	color: var(--accent-color);
-	border: 1px solid var(--accent-color);
+	transition: all 150ms;
 }
 
 .button-danger {
 	color: red;
 	border: 1px solid red;
+}
+
+.button-submit {
+	color: var(--accent-color);
+	border: 1px solid var(--accent-color);
 }
 
 .margin-top {
@@ -38,4 +44,20 @@ button:disabled {
 .edit {
 	color: orange;
 	border: 1px solid orange;
+}
+
+.x {
+	position: absolute;
+	font-size: 1.4em;
+	top: -0.5rem;
+	right: 0.5rem;
+	padding: 0.2em;
+	border-style: none;
+	border-radius: 100%;
+	background-color: transparent;
+	color: var(--text-color);
+}
+
+.x:hover {
+	transform: scale(1.3);
 }

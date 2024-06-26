@@ -10,6 +10,11 @@
 	cursor: pointer;
 	font-size: 2rem;
 	font-family: "Orbitron", sans-serif;
+	transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-header-title:hover {
+	transform: scale(1.1);
 }
 
 .main-header-title a,

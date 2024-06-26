@@ -1,20 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { CSSTransition } from "react-transition-group";
 
 import ReadMore from "./ReadMore";
-
 import styles from "./DesktopView.module.css";
 import Button from "../../../shared/formElements/Button";
 import Modal from "../ui/Modal";
+import Pencil from "../../../assets/icons/Pencil";
+import TextUpload from "../../../shared/formElements/TextUpload";
+import TrashIcon from "../../../assets/icons/TrashIcon";
 
 const DesktopView = (props) => {
-	//handler for the edit button
-	const editClickHandler = () => {
-		console.log("ok");
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [values, setValues] = useState({
+		title: "",
+		paragraph: "",
+	});
+
+	const inputs = [
+		{
+			id: 1,
+			name: "title",
+			type: "text",
+			placeholder: "Title",
+			errorMessage: "Must be 1-40 characters!",
+			label: "Title",
+			pattern: "^[A-Za-z0-9_@]{1,40}$",
+			required: true,
+		},
+		{
+			id: 2,
+			name: "paragraph",
+			type: "textarea",
+			placeholder: "Paragraph",
+			errorMessage: "Needs to be atleast 300 characters!",
+			label: "Paragraph",
+			pattern: "^.{300,}$",
+			required: true,
+		},
+	];
+
+	//handler for textInputs
+	const onChange = (e) => {
+		setValues({ ...values, [e.target.name]: e.target.value });
 	};
+
+	//sumbit handler for edits
+	const editSubmitHandler = (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("title", values.title);
+		formData.append("paragraph", values.paragraph);
+		for (const pair of formData.entries()) {
+			console.log(pair[0], pair[1]);
+		}
+
+		//dont forget to redirect user afterwards to .../
+	};
+
+	//sumbit handler for deletes
+	const deleteSubmitHandler = (e) => {
+		e.preventDefault();
+		console.log(props.article.id);
+		//dont forget to redirect user afterwards to .../
+	};
+
 	return (
 		<div className={`${styles["desktop-view"]}`}>
 			<div className={`${styles["article-hero"]}`}>
-				<img src={props.article.image} alt="props.article.title" />
+				<img
+					src={props.article.image}
+					alt="props.article.title"
+					className={`${styles["article-img"]}`}
+				/>
 				<div className={`${styles["article-icon-date"]}`}>
 					<svg
 						version="1.1"
@@ -80,8 +139,93 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 				</div>
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
 				<ReadMore paragraph={props.article.paragraph} />
-				<Button text="Edit" edit marginTop clickHandler={editClickHandler} />
-				<Modal />
+
+				{/* edit button */}
+				<Button
+					text="Edit"
+					edit
+					marginTop
+					clickHandler={() => setOpenEdit(true)}
+				/>
+
+				<CSSTransition
+					in={openEdit}
+					mountOnEnter
+					unmountOnExit
+					timeout={400}
+					classNames={"modal"}
+				>
+					<Modal open={openEdit} onClose={() => setOpenEdit(false)}>
+						<form action="submit" onSubmit={editSubmitHandler}>
+							<div className={`${styles["modal-wrapper"]}`}>
+								<Pencil />
+								<div className={`${styles["modal-edit"]}`}>
+									{inputs.map((input) => (
+										<TextUpload
+											key={input.id}
+											{...input}
+											value={values[input.name]}
+											onChange={onChange}
+										/>
+									))}
+									<div className={`${styles["modal-buttons"]}`}>
+										<Button
+											text="Cancel"
+											marginTop
+											clickHandler={() => setOpenEdit(false)}
+										/>
+										<Button
+											type="submit"
+											key="submit"
+											text="Submit"
+											marginTop
+											submit
+										/>
+									</div>
+								</div>
+							</div>
+						</form>
+					</Modal>
+				</CSSTransition>
+
+				{/* delete button */}
+				<Button
+					text="Delete"
+					danger
+					marginTop
+					clickHandler={() => setOpenDelete(true)}
+				/>
+
+				<CSSTransition
+					in={openDelete}
+					mountOnEnter
+					unmountOnExit
+					timeout={500}
+					classNames={"modal"}
+				>
+					<Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+						<form action="submit" onSubmit={deleteSubmitHandler}>
+							<div className={`${styles["modal-wrapper"]}`}>
+								<TrashIcon />
+								<h2> ARE YOU SURE YOU WANT TO DELETE???</h2>
+								<div className={`${styles["modal-buttons"]}`}>
+									<Button
+										text="Cancel"
+										marginTop
+										clickHandler={() => setOpenDelete(false)}
+									/>
+									<Button
+										type="submit"
+										key="submit"
+										text="Delete"
+										marginTop
+										danger
+									/>
+								</div>
+							</div>
+						</form>
+					</Modal>
+				</CSSTransition>
 			</div>
 		</div>
 	);

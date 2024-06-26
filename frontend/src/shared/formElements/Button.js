@@ -8,9 +8,10 @@ const Button = (props) => {
 			onClick={props.clickHandler}
 			disabled={props.disabled}
 			type={props.type}
-			className={`${styles["button-wrapper"]} ${
+			className={`${props.x ? styles["x"] : styles["button"]} ${
 				props.danger && styles["button-danger"]
 			} ${props.marginTop && styles["margin-top"]}
+			${props.submit && styles["button-submit"]}
 			${props.edit && styles["edit"]}
 			${props.disabled && styles["disabled"]}`}
 		>

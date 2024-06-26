@@ -7,8 +7,16 @@
 	width: 50%;
 	height: auto;
 	max-height: 300px;
-	float: right;
 	margin: 0 0 20px 20px;
+	transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-hero img:hover {
+	transform: scale(1.1);
+}
+
+.article-img {
+	float: right;
 }
 
 .article-icon-date {
@@ -23,6 +31,41 @@
 .article-title {
 	margin-bottom: 10px;
 }
+
+/* modal  */
+.modal-wrapper {
+	text-align: center;
+	width: 14rem;
+}
+
+.modal-wrapper h2 {
+	margin-top: 1rem;
+}
+
+.modal-edit {
+	/* background-color: blue; */
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	width: 12rem;
+}
+
+.modal-edit input,
+.modal-edit textarea {
+	width: 100%;
+}
+.modal-edit textarea {
+	width: 100%;
+	height: 10rem;
+}
+
+.modal-buttons {
+	display: flex;
+	column-gap: 1rem;
+	justify-content: center;
+}
+
 @media screen and (min-width: 1024px) {
 	.desktop-view {
 		display: inline;

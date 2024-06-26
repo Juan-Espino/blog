@@ -1,6 +1,26 @@
 .backdrop {
 	position: fixed;
 	inset: 0;
+	z-index: 5;
+	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.visible {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.invisible {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.modal {
+	position: relative;
+	color: var(--text-color);
+	z-index: 10;
+	background-color: var(--lastest-post-background-color);
+	border-radius: var(--img-border-radius);
+	padding: 1.5rem;
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
