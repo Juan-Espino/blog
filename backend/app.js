@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 
 const articlesRoutes = require("./routes/articles-routes");
+const usersRoutes = require("./routes/users-routes");
 
 const port = 5000;
 const app = express();
@@ -20,12 +21,14 @@ app.use((req, res, next) => {
 
 	//allows access with any of these types of request
 	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-
 	next();
 });
 
 //route for all the article api calls
 app.use("/api/articles", articlesRoutes);
+
+//route for all the users api calls
+app.use("/api/users", usersRoutes);
 
 app.listen(port, () => {
 	console.log("Listening!");
