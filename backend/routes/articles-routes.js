@@ -1,4 +1,5 @@
 const express = require("express");
+const { check } = require("express-validator");
 
 const router = express.Router();
 
@@ -10,9 +11,22 @@ const articlesController = require("../controllers/articles-controllers");
 
 router.get("/", articlesController.getArticles);
 
-router.post("/", articlesController.postArticle);
+//routes beyond this point require authentication
 
-router.patch("/:aid", articlesController.pathArticle);
+//
+//add image controllers here aswell
+//
+router.post(
+	"/",
+	[check("title").not().isEmpty(), check("paragraph").isLength({ min: 300 })],
+	articlesController.postArticle
+);
+
+router.patch(
+	"/:aid",
+	[check("title").not().isEmpty(), check("paragraph").isLength({ min: 300 })],
+	articlesController.pathArticle
+);
 
 router.delete("/:aid", articlesController.deleteArticle);
 

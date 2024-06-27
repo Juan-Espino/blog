@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator");
+const HttpError = require("../models/http-error");
 let DUMMY_ARTICLES = [
 	{
 		id: "a1",
@@ -49,6 +51,15 @@ const getArticles = async (req, res, next) => {
 */
 //controller for creating a new article
 const postArticle = async (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return next(
+			new HttpError(
+				"Invalid inputs passed, please check your title or paragraph.",
+				422
+			)
+		);
+	}
 	const { title, paragraph, image, creatorId } = req.body;
 
 	//verify creator exist in database
@@ -73,6 +84,16 @@ const postArticle = async (req, res, next) => {
 
 //controller for PATCHing an article
 const pathArticle = async (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return next(
+			new HttpError(
+				"Invalid inputs passed, please check your title or paragraph.",
+				422
+			)
+		);
+	}
+
 	const { title, paragraph } = req.body;
 
 	const articleId = req.params.aid;

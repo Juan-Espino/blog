@@ -4,9 +4,7 @@ const router = express.Router();
 
 const usersController = require("../controllers/users-controllers");
 
-//
-//dont forget to add validation to the needed routes!
-//
+//routes beyond this point require authentication
 router.post("/login", usersController.login);
 
 module.exports = router;
