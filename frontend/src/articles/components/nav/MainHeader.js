@@ -9,7 +9,7 @@ const MainHeader = (props) => {
 			{/* title */}
 			<Link to="/">
 				<h1 className={`${styles["main-header-title"]}`}>
-					<span className={`${styles["blinker"]}`}>_</span>Blog
+					<span className={`${styles["blinker"]}`}>_</span>Bloggin`
 				</h1>
 			</Link>
 			{/* theme switch slider */}
