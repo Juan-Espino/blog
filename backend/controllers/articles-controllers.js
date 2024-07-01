@@ -1,5 +1,8 @@
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const mysql = require("mysql2");
+
+//
 let DUMMY_ARTICLES = [
 	{
 		id: "a1",
@@ -43,7 +46,21 @@ let DUMMY_ARTICLES = [
 
 //controller that returns all articles in the database
 const getArticles = async (req, res, next) => {
-	res.json({ articles: DUMMY_ARTICLES });
+	// res.json({ articles: DUMMY_ARTICLES });
+
+	//testing database
+	const db = mysql.createConnection({
+		host: "localhost",
+		user: "root",
+		password: "5686",
+		database: "blog",
+	});
+
+	const q = "SELECT * FROM articles";
+	db.query(q, (err, data) => {
+		if (err) return res.json(err);
+		return res.json(data);
+	});
 };
 
 /*
