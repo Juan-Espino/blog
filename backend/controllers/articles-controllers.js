@@ -57,6 +57,7 @@ const getArticles = async (req, res, next) => {
 /*
   needs credentials to access these post request
 */
+
 //controller for creating a new article
 const postArticle = async (req, res, next) => {
 	const errors = validationResult(req);
@@ -72,6 +73,11 @@ const postArticle = async (req, res, next) => {
 
 	//verify creator exist in database
 	//could use users table later
+	//
+	//ADD IMGS AFTER CONNECTING THE FRONT AND BACKENDS!!!
+	/*
+
+	*/
 	const findCreatorId = `SELECT creatorId FROM articles WHERE (creatorId=${creatorId})`;
 	db.query(findCreatorId, (err, data) => {
 		if (err) {
@@ -87,6 +93,11 @@ const postArticle = async (req, res, next) => {
 
 	//create article in database
 	//&& add it to the creator Articles[] */
+	//
+	//
+	/*
+
+	*/
 	const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
 	const values = [title, paragraph, img, creatorId];
 
@@ -102,9 +113,8 @@ const postArticle = async (req, res, next) => {
 	});
 };
 
-//
 //controller for PATCHing an article
-const pathArticle = async (req, res, next) => {
+const patchArticle = async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return next(
@@ -115,50 +125,66 @@ const pathArticle = async (req, res, next) => {
 		);
 	}
 
-	const { title, paragraph } = req.body;
+	const { title, paragraph, creatorId } = req.body;
 
 	const articleId = req.params.aid;
 
-	//
 	//verify creator exist in database && aid is in their articles[]
-	//
+	/*
 
-	let article;
+	*/
+	const findCreatorId = `SELECT creatorId FROM articles WHERE (creatorId=${creatorId})`;
+	db.query(findCreatorId, (err, data) => {
+		if (err) {
+			const error = new HttpError("Error could not connect to database.", 500);
+			return next(error);
+		}
+		//check if userexist and by seeing if they have post
+		if (data.length < 1) {
+			const error = new HttpError("Error, you are not a creator", 401);
+			return next(error);
+		}
+	});
 
-	//
-	// find article by articelId in database
-	article = DUMMY_ARTICLES.filter((article) => article.id === articleId);
-	//
+	// find article by articelId in database && update title, paragraph
+	const updateArticle = `UPDATE articles SET title = '${title}', paragraph = '${paragraph}' WHERE id = '${articleId}'`;
 
-	//
-	//change title and or paragraph  and save in database
-	article[0].title = title;
-	article[0].paragraph = paragraph;
-	//
-
-	res.status(200).json(DUMMY_ARTICLES);
+	console.log(title);
+	db.query(updateArticle, (err, data) => {
+		if (err) {
+			const error = new HttpError(
+				"Could not update database please try again.",
+				500
+			);
+			return next(error);
+		}
+		res.status(200).json(data);
+	});
 };
 
 //controller for DELETING an article
 const deleteArticle = async (req, res, next) => {
 	const articleId = req.params.aid;
 
-	//
-	//verify creator exist in database && aid is in their articles[]
-	//
+	/* 
+	use req.userData.creatorId to determine if this user can delete this article
+	*/
+	//delete article and DELETE!!!!! article from the creators articles[]
 
-	//
-	//delete article and delete article from the creators articles[]
-	const filteredArray = DUMMY_ARTICLES.filter(
-		(article) => article.id !== articleId
-	);
-	DUMMY_ARTICLES = filteredArray;
-	//
-
-	res.status(200).json(DUMMY_ARTICLES);
+	const deleteArticle = `DELETE FROM articles WHERE id = ${articleId}`;
+	db.query(deleteArticle, (err, data) => {
+		if (err) {
+			const error = new HttpError(
+				"Error deleting article please try again",
+				500
+			);
+			return next(error);
+		}
+		return res.json(data);
+	});
 };
 
 exports.getArticles = getArticles;
 exports.postArticle = postArticle;
-exports.pathArticle = pathArticle;
+exports.patchArticle = patchArticle;
 exports.deleteArticle = deleteArticle;

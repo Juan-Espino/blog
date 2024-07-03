@@ -19,5 +19,4 @@ CREATE TABLE articles (
 );
 
 -- @block
-INSERT INTO articles (title, paragraph, img, creatorId) VALUES ('IDK', 'IDK Y NOT WORKING MAN',
-'https://www.drupal.org/files/project-images/screenshot_361.png', 1)
+DELETE FROM articles WHERE id = 5
