@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
-const mysql = require("mysql2");
+const db = require("../database/db");
 
 //
 let DUMMY_ARTICLES = [
@@ -46,19 +46,10 @@ let DUMMY_ARTICLES = [
 
 //controller that returns all articles in the database
 const getArticles = async (req, res, next) => {
-	// res.json({ articles: DUMMY_ARTICLES });
-
-	//testing database
-	const db = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "5686",
-		database: "blog",
-	});
-
 	const q = "SELECT * FROM articles";
 	db.query(q, (err, data) => {
 		if (err) return res.json(err);
+		console.log(data);
 		return res.json(data);
 	});
 };
@@ -77,28 +68,41 @@ const postArticle = async (req, res, next) => {
 			)
 		);
 	}
-	const { title, paragraph, image, creatorId } = req.body;
+	const { title, paragraph, img, creatorId } = req.body;
 
 	//verify creator exist in database
-	//
+	//could use users table later
+	const findCreatorId = `SELECT creatorId FROM articles WHERE (creatorId=${creatorId})`;
+	db.query(findCreatorId, (err, data) => {
+		if (err) {
+			const error = new HttpError("Error", 500);
+			return next(error);
+		}
+		//check if userexist and by seeing if they have post
+		if (data.length < 1) {
+			const error = new HttpError("Error, you are not a creator", 401);
+			return next(error);
+		}
+	});
 
-	//ids with be added in database this is just for testing
-	let id = "a" + Math.floor(Math.random() * 50);
-	//
-
-	//create date if not retrieved from frontend
-	const date = new Date().toLocaleDateString();
-
-	//
 	//create article in database
 	//&& add it to the creator Articles[] */
-	const article = { id, title, paragraph, image, creatorId, date };
-	DUMMY_ARTICLES.unshift(article);
-	//
+	const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
+	const values = [title, paragraph, img, creatorId];
 
-	res.json({ article: DUMMY_ARTICLES });
+	db.query(insertArticle, [values], (err, data) => {
+		if (err) {
+			const error = new HttpError(
+				"Could not insert article to the database, please try again.",
+				500
+			);
+			return next(error);
+		}
+		return res.json(data);
+	});
 };
 
+//
 //controller for PATCHing an article
 const pathArticle = async (req, res, next) => {
 	const errors = validationResult(req);
