@@ -19,4 +19,14 @@ CREATE TABLE articles (
 );
 
 -- @block
-DELETE FROM articles WHERE id = 5
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL,
+  pass TEXT NOT NULL
+)
+
+-- @block
+SELECT * FROM users
+
+-- @block
+DElETE FROM users
