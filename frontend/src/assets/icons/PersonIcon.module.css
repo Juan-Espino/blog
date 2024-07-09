@@ -1,0 +1,5 @@
+.PersonIcon {
+	width: 56px;
+	height: 56px;
+	stroke: var(--text-color);
+}

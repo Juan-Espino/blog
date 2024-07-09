@@ -5,7 +5,7 @@ const TextUpload = (props) => {
 
 	return (
 		<div className={`${styles["text-upload-wrapper"]}`}>
-			{props.type == "textarea" ? (
+			{type == "textarea" ? (
 				<textarea
 					className={`${styles["textarea"]}`}
 					{...inputProps}
@@ -14,6 +14,7 @@ const TextUpload = (props) => {
 			) : (
 				<input
 					className={`${styles["text-input"]}`}
+					type={type}
 					{...inputProps}
 					onChange={onChange}
 				/>

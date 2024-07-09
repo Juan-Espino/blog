@@ -2,5 +2,34 @@ footer {
 	margin-top: 1rem;
 	margin-bottom: 0.5rem;
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	/* bottom: -1; */
+}
+
+.signin {
+	text-decoration: underline;
+}
+
+.signin:hover {
+	text-decoration: none;
+}
+
+.signin,
+.signin:hover {
+	cursor: pointer;
+}
+
+.modal-wrapper {
+	width: 14rem;
+}
+
+.modal-buttons {
+	display: flex;
+	justify-content: space-around;
+}
+
+.modal-signin input {
+	width: 100%;
 }
