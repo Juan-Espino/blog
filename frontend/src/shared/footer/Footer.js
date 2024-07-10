@@ -19,7 +19,7 @@ const Footer = (props) => {
 			name: "email",
 			type: "text",
 			placeholder: "Email",
-			errorMessage: "Must be proper email address!",
+			errorMessage: "Must be a proper email address!",
 			label: "Email",
 			pattern: "^[^@]+@[^@]+.[^@]+$",
 			required: true,
@@ -44,7 +44,12 @@ const Footer = (props) => {
 	//sumbit handler for signin
 	const signinSubmitHandler = (e) => {
 		e.preventDefault();
-		console.log(values);
+		const formData = new FormData();
+		formData.append("email", values.email);
+		formData.append("password", values.password);
+		for (const pair of formData.entries()) {
+			console.log(pair[0], pair[1]);
+		}
 
 		//dont forget to redirect user afterwards to .../
 	};

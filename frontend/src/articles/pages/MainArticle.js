@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import HighlightedArticle from "../components/highlighted/HighlightedArticle";
 import LastestPosts from "../components/ui/LastestPosts";
@@ -8,6 +8,9 @@ import styles from "./MainArticle.module.css";
 const MainArticle = (props) => {
 	//might have to change url to /aID and read the url for the id
 	const articleId = useParams().articleId;
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState();
+	const [articles, setArticles] = useState();
 
 	const DUMMY_ARTICLES = [
 		{
@@ -50,15 +53,38 @@ const MainArticle = (props) => {
 		},
 	];
 
+	//GET request for articles
+	useEffect(() => {
+		const sendRequest = async () => {
+			setIsLoading(true);
+
+			try {
+				const response = await fetch(
+					process.env.REACT_APP_BACKEND_URL + "/articles"
+				);
+				const responseData = await response.json();
+
+				if (!response.ok) {
+					throw new Error(responseData.message);
+				}
+				setArticles(responseData);
+			} catch (err) {
+				setError(err.message);
+			}
+			setIsLoading(false);
+		};
+		sendRequest();
+	}, []);
+
 	let highlight;
 	let lastestPost;
-	let error = false;
+	let paramsError;
 	//if there is an articleId
 	if (articleId) {
 		[highlight] = DUMMY_ARTICLES.filter((article) => article.id == articleId);
 		lastestPost = DUMMY_ARTICLES.filter((article) => article.id !== articleId);
 		if (!highlight) {
-			error = true;
+			paramsError = true;
 		}
 	} else {
 		//if articleId is undefined (default setting)
@@ -71,13 +97,13 @@ const MainArticle = (props) => {
 
 	return (
 		<React.Fragment>
-			{error && (
+			{paramsError && (
 				<div className={`${styles["main-article"]}`}>
 					<h1>ERROR!! This is an invalid page please pick an article.</h1>
 					<LastestPosts articles={DUMMY_ARTICLES} />
 				</div>
 			)}
-			{!error && (
+			{!paramsError && (
 				<div className={`${styles["main-article"]}`}>
 					<HighlightedArticle article={highlight} />
 					<LastestPosts articles={lastestPost} />

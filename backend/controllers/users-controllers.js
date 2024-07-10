@@ -64,9 +64,11 @@ const signup = async (req, res, next) => {
 //controller for logging in users
 const login = async (req, res, next) => {
 	const { email, password } = req.body;
+	console.log(req.body);
 
 	const existingUser = `SELECT * FROM users WHERE email='${email}'`;
 	db.query(existingUser, async (err, data) => {
+		console.log(req.body);
 		if (data.length < 1) {
 			return next(new HttpError("Could not find user with this email.", 400));
 		} else {
@@ -92,7 +94,7 @@ const login = async (req, res, next) => {
 			/*
 			create token
 			*/
-			res.json({ email, password });
+			res.json({ success: "success", email, password });
 		}
 	});
 };
