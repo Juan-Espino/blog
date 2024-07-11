@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import HighlightedArticle from "../components/highlighted/HighlightedArticle";
 import LastestPosts from "../components/ui/LastestPosts";
@@ -6,58 +6,19 @@ import LastestPosts from "../components/ui/LastestPosts";
 import styles from "./MainArticle.module.css";
 
 const MainArticle = (props) => {
-	//might have to change url to /aID and read the url for the id
 	const articleId = useParams().articleId;
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState();
 	const [articles, setArticles] = useState();
+	const [paramsError, setParamsError] = useState(false);
 
-	const DUMMY_ARTICLES = [
-		{
-			id: "a1",
-			title: "Oppi Has Nothing On Me!!!",
-			date: "12 jun, 2020",
-			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
-			image:
-				"https://m.media-amazon.com/images/M/MV5BNmNkNWU5NzUtNmVkNS00ZDE2LTg0NjgtNTIxNWYxOWIyM2FlXkEyXkFqcGdeQWFkcmllY2xh._V1_.jpg",
-		},
-		{
-			id: "a2",
-			title: "No way",
-			date: "12 may, 2020",
-			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
-			image:
-				"https://st5.depositphotos.com/62628780/63465/i/450/depositphotos_634652768-stock-photo-cant-believe-handsome-african-american.jpg",
-		},
-		{
-			id: "a3",
-			title: "Yo you twiken",
-			date: "12 april, 2020",
-			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
-			image: "https://i.ytimg.com/vi/AM5qZGjJgCE/sddefault.jpg",
-		},
-		{
-			id: "a4",
-			title: "Naruto",
-			date: "12 oct, 2020",
-			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
-			image: "https://facts.net/wp-content/uploads/2023/05/Naruto.jpeg",
-		},
-		{
-			id: "a5",
-			title: "Loli",
-			date: "12 oct, 2020",
-			paragraph: ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolores cumque ab velit molestiae ducimus architecto? Placeat illo dolorem voluptatibus assumenda, odit sint, maxime fugit ut voluptates molestias perferendis. mLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere inventore deleniti voluptates labore dignissimos a, incidunt minus dolorem, atque consequuntur quisquam odit tenetur reprehenderit, error commodi suscipit. Tenetur, sequi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates tempore mollitia, quae ut beatae recusandae ratione provident, quam rerum itaque earum optio quisquam praesentium odit sequi dolore alias nostrum consequatur.`,
-			image:
-				"https://i0.wp.com/themodelspotter.com/wp-content/uploads/2021/10/z_loli-bahia-stella.jpg?resize=1200%2C800&ssl=1",
-		},
-	];
+	const [highlight, setHighlight] = useState();
+	// const [lastestPost, setLastestPost] = useState();
 
 	//GET request for articles
 	useEffect(() => {
 		const sendRequest = async () => {
 			setIsLoading(true);
-
 			try {
 				const response = await fetch(
 					process.env.REACT_APP_BACKEND_URL + "/articles"
@@ -76,37 +37,28 @@ const MainArticle = (props) => {
 		sendRequest();
 	}, []);
 
-	let highlight;
-	let lastestPost;
-	let paramsError;
-	//if there is an articleId
-	if (articleId) {
-		[highlight] = DUMMY_ARTICLES.filter((article) => article.id == articleId);
-		lastestPost = DUMMY_ARTICLES.filter((article) => article.id !== articleId);
-		if (!highlight) {
-			paramsError = true;
+	useMemo(() => {
+		if (articleId) {
+			let highlightedArticle;
+			[highlightedArticle] = articles.filter(
+				(article) => article.id == articleId
+			);
+			setHighlight(highlightedArticle);
+		} else if (articles) {
+			setHighlight(articles[0]);
+			console.log("ok");
+		} else {
 		}
-	} else {
-		//if articleId is undefined (default setting)
-		highlight = DUMMY_ARTICLES[0];
-		//remove highlighted article from articles array
-		lastestPost = DUMMY_ARTICLES.filter(
-			(article) => article.id !== highlight.id
-		);
-	}
+	}, [articles]);
 
 	return (
 		<React.Fragment>
-			{paramsError && (
-				<div className={`${styles["main-article"]}`}>
-					<h1>ERROR!! This is an invalid page please pick an article.</h1>
-					<LastestPosts articles={DUMMY_ARTICLES} />
-				</div>
-			)}
-			{!paramsError && (
+			{isLoading && <p>LOADING</p>}
+			{/* {articleId && !isLoading && checkParams} */}
+			{!isLoading && articles && (
 				<div className={`${styles["main-article"]}`}>
 					<HighlightedArticle article={highlight} />
-					<LastestPosts articles={lastestPost} />
+					<LastestPosts articles={articles} />
 				</div>
 			)}
 		</React.Fragment>

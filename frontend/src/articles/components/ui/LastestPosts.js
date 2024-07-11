@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../nav/Card";
 
+import { dateFormater } from "../../../shared/util/DateFormater";
 import styles from "./LastestPosts.module.css";
 const LastestPosts = (props) => {
 	return (
@@ -11,9 +12,9 @@ const LastestPosts = (props) => {
 					{props.articles.map((article) => (
 						<Card
 							id={article.id}
-							image={article.image}
+							image={article.img}
 							title={article.title}
-							date={article.date}
+							date={dateFormater(article.created)}
 							paragraph={article.paragraph}
 						/>
 					))}
@@ -22,9 +23,9 @@ const LastestPosts = (props) => {
 					{props.articles.map((article) => (
 						<Card
 							id={article.id}
-							image={article.image}
+							image={article.img}
 							title={article.title}
-							date={article.date}
+							date={dateFormater(article.created)}
 							paragraph={article.paragraph}
 						/>
 					))}

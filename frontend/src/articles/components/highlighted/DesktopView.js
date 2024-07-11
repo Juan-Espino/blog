@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import ReadMore from "./ReadMore";
+import { dateFormater } from "../../../shared/util/DateFormater";
 import styles from "./DesktopView.module.css";
 import Button from "../../../shared/formElements/Button";
 import Modal from "../ui/Modal";
@@ -70,7 +71,7 @@ const DesktopView = (props) => {
 		<div className={`${styles["desktop-view"]}`}>
 			<div className={`${styles["article-hero"]}`}>
 				<img
-					src={props.article.image}
+					src={props.article.img}
 					alt="props.article.title"
 					className={`${styles["article-img"]}`}
 				/>
@@ -135,7 +136,9 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 							</g>
 						</g>
 					</svg>
-					<h4 className={`${styles["article-date"]}`}>{props.article.date}</h4>
+					<h4 className={`${styles["article-date"]}`}>
+						{dateFormater(props.article.created)}
+					</h4>
 				</div>
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
 				<ReadMore paragraph={props.article.paragraph} />
