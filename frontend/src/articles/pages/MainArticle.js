@@ -39,29 +39,19 @@ const MainArticle = (props) => {
 	useMemo(() => {
 		let highlightedArticle;
 		let lastestArticles;
-		if (articleId) {
+		if (articleId && articles) {
 			[highlightedArticle] = articles.filter(
 				(article) => article.id == articleId
 			);
-			lastestArticles = articles.filter((article) => article.id !== articleId);
+			lastestArticles = articles.filter((article) => article.id != articleId);
 			setHighlight(highlightedArticle);
 			setLastestPost(lastestArticles);
 		} else if (articles) {
 			setHighlight(articles[0]);
-
-			//
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			//start here again
-			setLastestPost(articles);
+			lastestArticles = articles.filter(
+				(article) => article.id != articles[0].id
+			);
+			setLastestPost(lastestArticles);
 		} else {
 		}
 	}, [articles, articleId]);

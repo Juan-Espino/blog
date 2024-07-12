@@ -30,7 +30,7 @@ const DarkMode = () => {
 
 	return (
 		<div className={`${styles["main-header-slider-wrapper"]} center`}>
-			<label for="checkbox" className={`${styles["slider-label"]}`}>
+			<label htmlFor="checkbox" className={`${styles["slider-label"]}`}>
 				<input
 					type="checkbox"
 					className={`${styles["slider-input"]}`}

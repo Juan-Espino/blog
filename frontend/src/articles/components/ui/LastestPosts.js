@@ -11,6 +11,7 @@ const LastestPosts = (props) => {
 				<ul className={`${styles["lastest-posts-ul"]}`}>
 					{props.articles.map((article) => (
 						<Card
+							key={article.id}
 							id={article.id}
 							image={article.img}
 							title={article.title}
@@ -22,6 +23,7 @@ const LastestPosts = (props) => {
 				<ul className={`${styles["lastest-posts-ul"]}`}>
 					{props.articles.map((article) => (
 						<Card
+							key={article.id}
 							id={article.id}
 							image={article.img}
 							title={article.title}
