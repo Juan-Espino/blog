@@ -6,14 +6,13 @@ import LastestPosts from "../components/ui/LastestPosts";
 import styles from "./MainArticle.module.css";
 
 const MainArticle = (props) => {
-	const articleId = useParams().articleId;
+	const { articleId } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState();
 	const [articles, setArticles] = useState();
 	const [paramsError, setParamsError] = useState(false);
-
 	const [highlight, setHighlight] = useState();
-	// const [lastestPost, setLastestPost] = useState();
+	const [lastestPost, setLastestPost] = useState();
 
 	//GET request for articles
 	useEffect(() => {
@@ -38,18 +37,34 @@ const MainArticle = (props) => {
 	}, []);
 
 	useMemo(() => {
+		let highlightedArticle;
+		let lastestArticles;
 		if (articleId) {
-			let highlightedArticle;
 			[highlightedArticle] = articles.filter(
 				(article) => article.id == articleId
 			);
+			lastestArticles = articles.filter((article) => article.id !== articleId);
 			setHighlight(highlightedArticle);
+			setLastestPost(lastestArticles);
 		} else if (articles) {
 			setHighlight(articles[0]);
-			console.log("ok");
+
+			//
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			//start here again
+			setLastestPost(articles);
 		} else {
 		}
-	}, [articles]);
+	}, [articles, articleId]);
 
 	return (
 		<React.Fragment>
@@ -58,7 +73,7 @@ const MainArticle = (props) => {
 			{!isLoading && articles && (
 				<div className={`${styles["main-article"]}`}>
 					<HighlightedArticle article={highlight} />
-					<LastestPosts articles={articles} />
+					<LastestPosts articles={lastestPost} />
 				</div>
 			)}
 		</React.Fragment>
