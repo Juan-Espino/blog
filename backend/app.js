@@ -3,6 +3,7 @@ const express = require("express");
 
 const articlesRoutes = require("./routes/articles-routes");
 const usersRoutes = require("./routes/users-routes");
+const HttpError = require("./models/http-error");
 
 const port = 5000;
 const app = express();
@@ -29,6 +30,11 @@ app.use("/api/articles", articlesRoutes);
 
 //route for all the users api calls
 app.use("/api/users", usersRoutes);
+
+app.use((req, res, next) => {
+	const error = new HttpError("Could not find this route.", 404);
+	throw error;
+});
 
 app.listen(port, () => {
 	console.log("Listening!");
