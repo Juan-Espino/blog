@@ -6,7 +6,7 @@ const db = require("../database/db");
 const getArticles = async (req, res, next) => {
 	const q = "SELECT * FROM articles";
 	db.query(q, (err, data) => {
-		if (err) return res.json(err);
+		if (err || data.length < 1) return res.json(err);
 		return res.json(data);
 	});
 };
@@ -105,7 +105,7 @@ const patchArticle = async (req, res, next) => {
 	});
 
 	// find article by articelId in database && update title, paragraph
-	const updateArticle = `UPDATE articles SET title = '${title}', paragraph = '${paragraph}' WHERE id = '${articleId}'`;
+	const updateArticle = `UPDATE articles SET title = "${title}", paragraph = "${paragraph}" WHERE id = '${articleId}'`;
 
 	db.query(updateArticle, (err, data) => {
 		if (err) {

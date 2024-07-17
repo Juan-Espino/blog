@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import ReadMore from "./ReadMore";
@@ -14,6 +14,7 @@ import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 const DesktopView = (props) => {
 	const { isLoading, error, clearError, sendRequest } = useHttpClient();
+	const navigate = useNavigate();
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [values, setValues] = useState({
@@ -52,13 +53,6 @@ const DesktopView = (props) => {
 	//sumbit handler for edits
 	const editSubmitHandler = async (e) => {
 		e.preventDefault();
-		const formData = new FormData();
-		formData.append("title", values.title);
-		formData.append("paragraph", values.paragraph);
-		for (const pair of formData.entries()) {
-			console.log(pair[0], pair[1]);
-		}
-
 		try {
 			await sendRequest(
 				process.env.REACT_APP_BACKEND_URL + `/articles/${props.article.id}`,
@@ -77,10 +71,16 @@ const DesktopView = (props) => {
 	};
 
 	//sumbit handler for deletes
-	const deleteSubmitHandler = (e) => {
+	const deleteSubmitHandler = async (e) => {
 		e.preventDefault();
-		console.log(props.article.id);
-		//dont forget to redirect user afterwards to .../
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL + `/articles/${props.article.id}`,
+				"DELETE"
+			);
+			navigate("/");
+			window.location.reload();
+		} catch (err) {}
 	};
 
 	return (
