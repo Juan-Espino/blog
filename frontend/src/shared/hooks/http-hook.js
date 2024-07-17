@@ -8,7 +8,7 @@ export const useHttpClient = () => {
 	const activeHttpRequest = useRef([]);
 
 	const sendRequest = useCallback(
-		async (url, method = "GET", headers = {}, body = null) => {
+		async (url, method = "GET", body = null, headers = {}) => {
 			try {
 				setIsLoading(true);
 

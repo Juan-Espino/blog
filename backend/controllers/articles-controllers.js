@@ -7,7 +7,6 @@ const getArticles = async (req, res, next) => {
 	const q = "SELECT * FROM articles";
 	db.query(q, (err, data) => {
 		if (err) return res.json(err);
-		console.log(data);
 		return res.json(data);
 	});
 };
@@ -74,6 +73,7 @@ const postArticle = async (req, res, next) => {
 //controller for PATCHing an article
 const patchArticle = async (req, res, next) => {
 	const errors = validationResult(req);
+	console.log(req.body);
 	if (!errors.isEmpty()) {
 		return next(
 			new HttpError(
@@ -107,7 +107,6 @@ const patchArticle = async (req, res, next) => {
 	// find article by articelId in database && update title, paragraph
 	const updateArticle = `UPDATE articles SET title = '${title}', paragraph = '${paragraph}' WHERE id = '${articleId}'`;
 
-	console.log(title);
 	db.query(updateArticle, (err, data) => {
 		if (err) {
 			const error = new HttpError(

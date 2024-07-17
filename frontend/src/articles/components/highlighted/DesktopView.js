@@ -10,8 +10,10 @@ import Modal from "../ui/Modal";
 import Pencil from "../../../assets/icons/Pencil";
 import TextUpload from "../../../shared/formElements/TextUpload";
 import TrashIcon from "../../../assets/icons/TrashIcon";
+import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 const DesktopView = (props) => {
+	const { isLoading, error, clearError, sendRequest } = useHttpClient();
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [values, setValues] = useState({
@@ -27,7 +29,7 @@ const DesktopView = (props) => {
 			placeholder: "Title",
 			errorMessage: "Must be 1-40 characters!",
 			label: "Title",
-			pattern: "^[A-Za-z0-9_@]{1,40}$",
+			pattern: "^[A-Za-z0-9_@- ]{1,40}$",
 			required: true,
 		},
 		{
@@ -48,7 +50,7 @@ const DesktopView = (props) => {
 	};
 
 	//sumbit handler for edits
-	const editSubmitHandler = (e) => {
+	const editSubmitHandler = async (e) => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append("title", values.title);
@@ -57,7 +59,21 @@ const DesktopView = (props) => {
 			console.log(pair[0], pair[1]);
 		}
 
-		//dont forget to redirect user afterwards to .../
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL + `/articles/${props.article.id}`,
+				"PATCH",
+				JSON.stringify({
+					title: values.title,
+					paragraph: values.paragraph,
+					creatorId: 1,
+				}),
+				{
+					"Content-Type": " Application/json",
+				}
+			);
+			window.location.reload();
+		} catch (err) {}
 	};
 
 	//sumbit handler for deletes
