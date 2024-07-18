@@ -10,7 +10,7 @@ const Card = (props) => {
 		<li key={props.id} className={`${styles["card-li"]}`}>
 			<Link to={`/${props.id}`}>
 				<div className={`${styles["card-wrapper"]}`}>
-					<img src={props.image} alt="props.title" />
+					<img src={props.image} alt={props.title} />
 					<h4 className={`${styles["card-title"]}`}>{props.title}</h4>
 					<div className={`${styles["card-icon-date"]}`}>
 						<DateIcon />

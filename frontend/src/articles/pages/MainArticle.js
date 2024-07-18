@@ -49,9 +49,9 @@ const MainArticle = (props) => {
 			}
 		} else if (articles) {
 			clearError();
-			setHighlight(articles[0]);
+			setHighlight(articles.at(-1));
 			lastestArticles = articles.filter(
-				(article) => article.id != articles[0].id
+				(article) => article.id != articles.at(-1).id
 			);
 			setLastestPost(lastestArticles);
 		} else {

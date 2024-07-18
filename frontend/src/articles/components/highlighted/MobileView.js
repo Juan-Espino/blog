@@ -23,7 +23,10 @@ const MobileView = (props) => {
 				data-color={`${!scroll ? "translucent" : "nottranslucent"}`}
 			>
 				<div className={`${styles["article-img-wrapper"]}`}>
-					<img src={props.article.img} alt="props.article.title" />
+					<img
+						src={process.env.REACT_APP_ASSET_URL + "/" + props.article.img}
+						alt={props.article.title}
+					/>
 				</div>
 				<div
 					className={`${styles["article-metadata-wrapper"]} ${

@@ -87,8 +87,8 @@ const DesktopView = (props) => {
 		<div className={`${styles["desktop-view"]}`}>
 			<div className={`${styles["article-hero"]}`}>
 				<img
-					src={props.article.img}
-					alt="props.article.title"
+					src={process.env.REACT_APP_ASSET_URL + "/" + props.article.img}
+					alt={props.article.title}
 					className={`${styles["article-img"]}`}
 				/>
 				<div className={`${styles["article-icon-date"]}`}>
@@ -159,13 +159,23 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
 				<ReadMore paragraph={props.article.paragraph} />
 
-				{/* edit button */}
-				<Button
-					text="Edit"
-					edit
-					marginTop
-					clickHandler={() => setOpenEdit(true)}
-				/>
+				<div className={`${styles["article-buttons"]}`}>
+					{/* edit button */}
+					<Button
+						text="Edit"
+						edit
+						marginTop
+						clickHandler={() => setOpenEdit(true)}
+					/>
+
+					{/* delete button */}
+					<Button
+						text="Delete"
+						danger
+						marginTop
+						clickHandler={() => setOpenDelete(true)}
+					/>
+				</div>
 
 				<CSSTransition
 					in={openEdit}
@@ -206,14 +216,6 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 						</form>
 					</Modal>
 				</CSSTransition>
-
-				{/* delete button */}
-				<Button
-					text="Delete"
-					danger
-					marginTop
-					clickHandler={() => setOpenDelete(true)}
-				/>
 
 				<CSSTransition
 					in={openDelete}

@@ -13,7 +13,7 @@ const LastestPosts = (props) => {
 						<Card
 							key={article.id}
 							id={article.id}
-							image={article.img}
+							image={process.env.REACT_APP_ASSET_URL + "/" + article.img}
 							title={article.title}
 							date={dateFormater(article.created)}
 							paragraph={article.paragraph}
@@ -25,7 +25,7 @@ const LastestPosts = (props) => {
 						<Card
 							key={article.id}
 							id={article.id}
-							image={article.img}
+							image={process.env.REACT_APP_ASSET_URL + "/" + article.img}
 							title={article.title}
 							date={dateFormater(article.created)}
 							paragraph={article.paragraph}

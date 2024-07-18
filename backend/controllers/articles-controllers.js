@@ -26,15 +26,10 @@ const postArticle = async (req, res, next) => {
 			)
 		);
 	}
-	const { title, paragraph, img, creatorId } = req.body;
+
+	const { title, paragraph, creatorId } = req.body;
 
 	//verify creator exist in database
-	//could use users table later
-	//
-	//ADD IMGS AFTER CONNECTING THE FRONT AND BACKENDS!!!
-	/*
-
-	*/
 	const findCreatorId = `SELECT creatorId FROM articles WHERE (creatorId=${creatorId})`;
 	db.query(findCreatorId, (err, data) => {
 		if (err) {
@@ -49,14 +44,8 @@ const postArticle = async (req, res, next) => {
 	});
 
 	//create article in database
-	//&& add it to the creator Articles[] */
-	//
-	//
-	/*
-
-	*/
 	const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
-	const values = [title, paragraph, img, creatorId];
+	const values = [title, paragraph, req.file.path, creatorId];
 
 	db.query(insertArticle, [values], (err, data) => {
 		if (err) {
@@ -87,10 +76,7 @@ const patchArticle = async (req, res, next) => {
 
 	const articleId = req.params.aid;
 
-	//verify creator exist in database && aid is in their articles[]
-	/*
-
-	*/
+	//verify creator exist in database
 	const findCreatorId = `SELECT creatorId FROM articles WHERE (creatorId=${creatorId})`;
 	db.query(findCreatorId, (err, data) => {
 		if (err) {

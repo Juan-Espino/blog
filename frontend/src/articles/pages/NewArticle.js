@@ -1,12 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
+import { CSSTransition } from "react-transition-group";
+import { useNavigate } from "react-router-dom";
 
 import ImageUpload from "../../shared/formElements/ImageUpload";
 import TextUpload from "../../shared/formElements/TextUpload";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import Modal from "../components/ui/Modal";
 
 import styles from "./NewArticle.module.css";
 import Button from "../../shared/formElements/Button";
 
 const NewArticle = (props) => {
+	const navigate = useNavigate();
+	const { isLoading, error, clearError, sendRequest } = useHttpClient();
 	const [file, setFile] = useState();
 	const [fileExist, setFileExist] = useState(false);
 	const [values, setValues] = useState({
@@ -22,7 +28,7 @@ const NewArticle = (props) => {
 			placeholder: "Title",
 			errorMessage: "Must be 1-40 characters!",
 			label: "Title",
-			pattern: "^[A-Za-z0-9_@]{1,40}$",
+			pattern: "^[A-Za-z0-9_@ ]{1,40}$",
 			required: true,
 		},
 		{
@@ -41,7 +47,6 @@ const NewArticle = (props) => {
 	const inputHandler = (id, pickedFile, fileIsValid) => {
 		setFile(pickedFile);
 		setFileExist(true);
-		console.log(file);
 	};
 
 	//handler for textInputs
@@ -50,49 +55,70 @@ const NewArticle = (props) => {
 	};
 
 	//handler for the whole new article form submission
-	const newArticleSubmitHandler = (e) => {
+	const newArticleSubmitHandler = async (e) => {
 		e.preventDefault();
-		if (!!file) {
-		}
 		const formData = new FormData();
 		formData.append("image", file);
 		formData.append("title", values.title);
 		formData.append("paragraph", values.paragraph);
-		for (const pair of formData.entries()) {
-			console.log(pair[0], pair[1]);
-		}
-
-		//check if file, title, paragraph, then enable add article submit button
-		//ON Add Article just log all info for now
+		formData.append("creatorId", 1);
+		try {
+			const responseData = await sendRequest(
+				process.env.REACT_APP_BACKEND_URL + "/articles",
+				"POST",
+				formData
+			);
+			navigate("/");
+		} catch (err) {}
 	};
 
-	console.log(values);
-
 	return (
-		<form
-			onSubmit={newArticleSubmitHandler}
-			className={`${styles["form-wrapper"]}`}
-		>
-			<ImageUpload onInput={inputHandler} />
-			{/* value={values[input.name]} == value=values[title]... */}
-			{inputs.map((input) => (
-				<TextUpload
-					key={input.id}
-					{...input}
-					value={values[input.name]}
-					onChange={onChange}
-				/>
-			))}
-			<div className={`${styles["button-wrapper"]}`}>
-				<Button
-					key="sumbit"
-					type="sumbit"
-					text="Add Article"
-					marginTop
-					disabled={!fileExist}
-				/>
-			</div>
-		</form>
+		<React.Fragment>
+			{error && !isLoading && (
+				<CSSTransition
+					in={error}
+					mountOnEnter
+					unmountOnExit
+					timeout={500}
+					classNames={"modal"}
+				>
+					<Modal
+						open={error}
+						onClose={() => {
+							clearError();
+						}}
+					>
+						<h1>Error!</h1>
+						<h2>{error}</h2>
+					</Modal>
+				</CSSTransition>
+			)}
+
+			<form
+				onSubmit={newArticleSubmitHandler}
+				className={`${styles["form-wrapper"]}`}
+			>
+				<ImageUpload onInput={inputHandler} />
+				{/* value={values[input.name]} == value=values[title]... */}
+				{inputs.map((input) => (
+					<TextUpload
+						key={input.id}
+						{...input}
+						value={values[input.name]}
+						onChange={onChange}
+					/>
+				))}
+				<div className={`${styles["button-wrapper"]}`}>
+					<Button
+						key="sumbit"
+						type="sumbit"
+						text="Add Article"
+						marginTop
+						disabled={!file}
+					/>
+				</div>
+			</form>
+		</React.Fragment>
 	);
 };
 
