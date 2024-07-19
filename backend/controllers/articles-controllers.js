@@ -62,7 +62,6 @@ const postArticle = async (req, res, next) => {
 //controller for PATCHing an article
 const patchArticle = async (req, res, next) => {
 	const errors = validationResult(req);
-	console.log(req.body);
 	if (!errors.isEmpty()) {
 		return next(
 			new HttpError(

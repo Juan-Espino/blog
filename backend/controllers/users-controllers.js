@@ -23,7 +23,6 @@ const signup = async (req, res, next) => {
 			return next(error);
 		}
 		if (data.length > 0) {
-			console.log("email exist!!!");
 			return next(new HttpError("Error! User email already exist.", 401));
 		} else {
 			//hash password
@@ -64,7 +63,6 @@ const signup = async (req, res, next) => {
 //controller for logging in users
 const login = async (req, res, next) => {
 	const { email, password } = req.body;
-	console.log(req.body);
 
 	const existingUser = `SELECT * FROM users WHERE email='${email}'`;
 	db.query(existingUser, async (err, data) => {

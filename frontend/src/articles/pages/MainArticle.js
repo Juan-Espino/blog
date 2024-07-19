@@ -28,6 +28,8 @@ const MainArticle = (props) => {
 		makeRequest();
 	}, []);
 
+	//to handle the rendering of articles without having to fetch again
+	//and handle any url params that determine which article to show, and where
 	useMemo(() => {
 		let highlightedArticle;
 		let lastestArticles;
@@ -37,8 +39,7 @@ const MainArticle = (props) => {
 				(article) => article.id == articleId
 			);
 			lastestArticles = articles.filter((article) => article.id != articleId);
-			//check for paramsError!
-			//
+
 			if (!highlightedArticle) {
 				setParamsError(true);
 				setLastestPost(lastestArticles);

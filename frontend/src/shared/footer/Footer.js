@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import Modal from "../../articles/components/ui/Modal";
 import Button from "../formElements/Button";
@@ -7,9 +7,12 @@ import TextUpload from "../formElements/TextUpload";
 import styles from "./Footer.module.css";
 import { useHttpClient } from "../hooks/http-hook";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth-context";
 
 const Footer = (props) => {
 	const navigate = useNavigate();
+	const auth = useContext(AuthContext);
+
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 	const [openSignin, setOpenSignin] = useState(false);
 	const [values, setValues] = useState({
@@ -58,6 +61,9 @@ const Footer = (props) => {
 				}
 			);
 			setOpenSignin(false);
+			auth.login();
+			values.email = "";
+			values.password = "";
 		} catch (err) {}
 	};
 	return (
@@ -67,8 +73,13 @@ const Footer = (props) => {
 			<p> All rights reserved. ©</p>
 
 			{/* signin link */}
-			<p className={`${styles["signin"]}`} onClick={() => setOpenSignin(true)}>
-				Sign In
+			<p
+				className={`${styles["signin"]}`}
+				onClick={
+					auth.loggedIn ? () => auth.logout() : () => setOpenSignin(true)
+				}
+			>
+				{auth.loggedIn ? "Logout" : "Sign in"}
 			</p>
 
 			<CSSTransition

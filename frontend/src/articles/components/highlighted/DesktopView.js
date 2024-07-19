@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import { AuthContext } from "../../../shared/context/auth-context";
 
 import ReadMore from "./ReadMore";
 import { dateFormater } from "../../../shared/util/DateFormater";
@@ -21,6 +22,8 @@ const DesktopView = (props) => {
 		title: "",
 		paragraph: "",
 	});
+
+	const auth = useContext(AuthContext);
 
 	const inputs = [
 		{
@@ -159,23 +162,33 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 				<h2 className={`${styles["article-title"]}`}>{props.article.title}</h2>
 				<ReadMore paragraph={props.article.paragraph} />
 
-				<div className={`${styles["article-buttons"]}`}>
-					{/* edit button */}
-					<Button
-						text="Edit"
-						edit
-						marginTop
-						clickHandler={() => setOpenEdit(true)}
-					/>
+				{auth.loggedIn && (
+					<div className={`${styles["article-buttons"]}`}>
+						{/* edit button */}
+						<Button
+							text="Edit"
+							edit
+							marginTop
+							clickHandler={() => setOpenEdit(true)}
+						/>
 
-					{/* delete button */}
-					<Button
-						text="Delete"
-						danger
-						marginTop
-						clickHandler={() => setOpenDelete(true)}
-					/>
-				</div>
+						{/* delete button */}
+						<Button
+							text="Delete"
+							danger
+							marginTop
+							clickHandler={() => setOpenDelete(true)}
+						/>
+
+						{/* new post button*/}
+						<Button
+							text="New Post"
+							submit
+							marginTop
+							clickHandler={() => navigate("/new")}
+						/>
+					</div>
+				)}
 
 				<CSSTransition
 					in={openEdit}
