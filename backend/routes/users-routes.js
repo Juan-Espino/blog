@@ -14,7 +14,13 @@ router.post(
 	usersController.signup
 );
 
-//routes beyond this point require authentication
-router.post("/login", usersController.login);
+router.post(
+	"/login",
+	[
+		check("email").normalizeEmail().isEmail(),
+		check("password").isLength({ min: 6 }),
+	],
+	usersController.login
+);
 
 module.exports = router;

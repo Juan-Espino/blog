@@ -52,7 +52,7 @@ const Footer = (props) => {
 	const signinSubmitHandler = async (e) => {
 		e.preventDefault();
 		try {
-			await sendRequest(
+			const responseData = await sendRequest(
 				process.env.REACT_APP_BACKEND_URL + "/users/login",
 				"POST",
 				JSON.stringify({ email: values.email, password: values.password }),
@@ -60,6 +60,7 @@ const Footer = (props) => {
 					"Content-Type": " Application/json",
 				}
 			);
+			console.log(responseData);
 			setOpenSignin(false);
 			auth.login();
 			values.email = "";

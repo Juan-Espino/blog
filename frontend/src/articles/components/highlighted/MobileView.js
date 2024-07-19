@@ -14,6 +14,19 @@ const MobileView = (props) => {
 			}
 		});
 	}, []);
+
+	const text = props.article.paragraph;
+	const lines = text.split("BREAK");
+
+	const formatedParagraph = lines.map((line, index) => (
+		<React.Fragment key={index}>
+			<p className={`${styles["paragraph"]}`}>{line}</p>
+			<br />
+		</React.Fragment>
+	));
+
+	const noBreaks = lines.join();
+
 	return (
 		<div className={`${styles["mobile-view"]}`}>
 			{/* MobileView hero */}
@@ -104,7 +117,8 @@ c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512
 				</div>
 			</div>
 			{/* MobileView Paragraph */}
-			<p className={`${styles["paragraph"]}`}>{props.article.paragraph}</p>
+			{/* <p className={`${styles["paragraph"]}`}>{props.article.paragraph}</p> */}
+			{formatedParagraph}
 		</div>
 	);
 };

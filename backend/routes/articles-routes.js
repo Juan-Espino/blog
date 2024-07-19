@@ -3,13 +3,15 @@ const { check } = require("express-validator");
 
 const router = express.Router();
 
+const checkAuth = require("../middleware/check-auth");
 const articlesController = require("../controllers/articles-controllers");
 const fileUpload = require("../middleware/file-upload");
 
 router.get("/", articlesController.getArticles);
 
 //routes beyond this point require authentication
-//
+router.use(checkAuth);
+
 router.post(
 	"/",
 	fileUpload.single("image"),

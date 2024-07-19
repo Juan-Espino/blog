@@ -19,11 +19,13 @@ const ReadMore = (props) => {
 		</React.Fragment>
 	));
 
+	const noBreaks = lines.join();
+
 	return (
 		<React.Fragment>
 			{isReadMore && (
 				<p className={`${styles["paragraph"]}`}>
-					{text.slice(0, 550) + "  ..."}
+					{noBreaks.slice(0, 475) + "  ..."}
 				</p>
 			)}
 			{!isReadMore && formatedParagraph}

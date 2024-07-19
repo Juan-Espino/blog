@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const db = require("../database/db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //constroller for signing up users
 const signup = async (req, res, next) => {
@@ -70,7 +71,6 @@ const login = async (req, res, next) => {
 			return next(new HttpError("Could not find user with this email.", 400));
 		} else {
 			//decrypt password and compare to database
-
 			let isValidPassword = false;
 			try {
 				isValidPassword = await bcrypt.compare(password, data[0].pass);
@@ -87,12 +87,22 @@ const login = async (req, res, next) => {
 				);
 			}
 
-			//
-			/*
-			create token
-			*/
-			console.log("success");
-			res.json({ success: "success", email, password });
+			//token
+			let token;
+			try {
+				token = jwt.sign(
+					{ creatorId: data[0].id },
+					"please_leave_my_blog_alone_sir",
+					{ expiresIn: "1h" }
+				);
+			} catch (err) {
+				return next(
+					new HttpError("Could not log in, please try again later."),
+					500
+				);
+			}
+
+			res.json({ creatorId: data[0].id, email, token });
 		}
 	});
 };
