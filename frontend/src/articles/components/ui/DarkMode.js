@@ -22,10 +22,10 @@ const DarkMode = () => {
 
 	const selectedTheme = localStorage.getItem("selectedTheme");
 
-	if (selectedTheme === "dark") {
-		setDarkMode();
-	} else {
+	if (selectedTheme == "light") {
 		setLightMode();
+	} else {
+		setDarkMode();
 	}
 
 	return (

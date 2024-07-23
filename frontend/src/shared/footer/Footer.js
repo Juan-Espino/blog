@@ -60,9 +60,8 @@ const Footer = (props) => {
 					"Content-Type": " Application/json",
 				}
 			);
-			console.log(responseData);
 			setOpenSignin(false);
-			auth.login();
+			auth.login(responseData.creatorId, responseData.token);
 			values.email = "";
 			values.password = "";
 		} catch (err) {}

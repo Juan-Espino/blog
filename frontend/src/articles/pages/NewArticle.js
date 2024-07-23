@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 
@@ -6,12 +6,14 @@ import ImageUpload from "../../shared/formElements/ImageUpload";
 import TextUpload from "../../shared/formElements/TextUpload";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Modal from "../components/ui/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import styles from "./NewArticle.module.css";
 import Button from "../../shared/formElements/Button";
 
 const NewArticle = (props) => {
 	const navigate = useNavigate();
+	const auth = useContext(AuthContext);
 	const { isLoading, error, clearError, sendRequest } = useHttpClient();
 	const [file, setFile] = useState();
 	const [fileExist, setFileExist] = useState(false);
@@ -61,12 +63,13 @@ const NewArticle = (props) => {
 		formData.append("image", file);
 		formData.append("title", values.title);
 		formData.append("paragraph", values.paragraph);
-		formData.append("creatorId", 1);
+		formData.append("creatorId", auth.creatorId);
 		try {
 			const responseData = await sendRequest(
 				process.env.REACT_APP_BACKEND_URL + "/articles",
 				"POST",
-				formData
+				formData,
+				{ Authorization: "Bearer " + auth.token }
 			);
 			navigate("/");
 		} catch (err) {}

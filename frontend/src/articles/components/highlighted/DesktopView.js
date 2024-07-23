@@ -16,14 +16,13 @@ import { useHttpClient } from "../../../shared/hooks/http-hook";
 const DesktopView = (props) => {
 	const { isLoading, error, clearError, sendRequest } = useHttpClient();
 	const navigate = useNavigate();
+	const auth = useContext(AuthContext);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [values, setValues] = useState({
 		title: "",
 		paragraph: "",
 	});
-
-	const auth = useContext(AuthContext);
 
 	const inputs = [
 		{
@@ -63,14 +62,16 @@ const DesktopView = (props) => {
 				JSON.stringify({
 					title: values.title,
 					paragraph: values.paragraph,
-					creatorId: 1,
+					creatorId: auth.creatorId,
 				}),
 				{
 					"Content-Type": " Application/json",
+					Authorization: "Bearer " + auth.token,
 				}
 			);
-			window.location.reload();
 		} catch (err) {}
+		console.log("submited");
+		window.location.reload();
 	};
 
 	//sumbit handler for deletes
@@ -79,11 +80,18 @@ const DesktopView = (props) => {
 		try {
 			await sendRequest(
 				process.env.REACT_APP_BACKEND_URL + `/articles/${props.article.id}`,
-				"DELETE"
+				"DELETE",
+				JSON.stringify({
+					creatorId: auth.creatorId,
+				}),
+				{
+					"Content-Type": " Application/json",
+					Authorization: "Bearer " + auth.token,
+				}
 			);
-			navigate("/");
-			window.location.reload();
 		} catch (err) {}
+		navigate("/");
+		window.location.reload();
 	};
 
 	return (
