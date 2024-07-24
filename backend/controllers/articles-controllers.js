@@ -45,6 +45,7 @@ const postArticle = async (req, res, next) => {
 			//create article in database
 			const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
 			const values = [title, paragraph, req.file.path, creatorId];
+			console.log(req.file.path);
 
 			db.query(insertArticle, [values], (err, data) => {
 				if (err) {

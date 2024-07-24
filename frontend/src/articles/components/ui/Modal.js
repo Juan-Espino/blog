@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../shared/formElements/Button";
 
 import styles from "./Modal.module.css";
-const Modal = ({ open, onClose, children }) => {
+const Modal = ({ open, onClose, loading, children }) => {
 	return (
 		//backdrop
 		<div
@@ -14,9 +14,10 @@ const Modal = ({ open, onClose, children }) => {
 			{/* modal */}
 			<div
 				onClick={(e) => e.stopPropagation()}
-				className={`${styles["modal"]}`}
+				className={`${styles["modal"]}
+				${loading && styles["loading"]}`}
 			>
-				<Button text="x" x clickHandler={onClose} />
+				{!loading && <Button text="x" x clickHandler={onClose} />}
 				{children}
 			</div>
 		</div>

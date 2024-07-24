@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Suspense } from "react";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -7,14 +7,18 @@ import {
 } from "react-router-dom";
 import MainArticle from "./articles/pages/MainArticle";
 import MainHeader from "./articles/components/nav/MainHeader";
-import NewArticle from "./articles/pages/NewArticle";
+// import NewArticle from "./articles/pages/NewArticle";
 import Footer from "./shared/footer/Footer";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import Loading from "./articles/components/ui/Loading";
+
+const NewArticle = React.lazy(() => import("./articles/pages/NewArticle"));
 
 const App = () => {
 	const { token, login, logout, creatorId } = useAuth();
 	let routes;
+	const [openModal, setOpenModal] = useState(true);
 
 	if (token) {
 		routes = (
@@ -43,7 +47,15 @@ const App = () => {
 				<MainHeader />
 				<main>
 					<div>
-						<Routes>{routes}</Routes>
+						<Suspense
+							fallback={
+								<div>
+									<Loading openModal={openModal} setOpenModal={setOpenModal} />
+								</div>
+							}
+						>
+							<Routes>{routes}</Routes>
+						</Suspense>
 					</div>
 					<Footer />
 				</main>

@@ -5,6 +5,7 @@ import HighlightedArticle from "../components/highlighted/HighlightedArticle";
 import LastestPosts from "../components/ui/LastestPosts";
 
 import styles from "./MainArticle.module.css";
+import Loading from "../components/ui/Loading";
 
 const MainArticle = (props) => {
 	const { articleId } = useParams();
@@ -12,6 +13,7 @@ const MainArticle = (props) => {
 	const [paramsError, setParamsError] = useState(false);
 	const [highlight, setHighlight] = useState();
 	const [lastestPost, setLastestPost] = useState();
+	const [openModal, setOpenModal] = useState(true);
 
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -61,7 +63,9 @@ const MainArticle = (props) => {
 
 	return (
 		<React.Fragment>
-			{isLoading && <p>LOADING</p>}
+			{isLoading && (
+				<Loading openModal={openModal} setOpenModal={setOpenModal} />
+			)}
 			{!isLoading && error && <h1>{error}</h1>}
 			{!isLoading && articleId && paramsError && (
 				<div className={`${styles["main-article"]}`}>
