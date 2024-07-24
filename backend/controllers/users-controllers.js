@@ -90,11 +90,9 @@ const login = async (req, res, next) => {
 			//token
 			let token;
 			try {
-				token = jwt.sign(
-					{ creatorId: data[0].id },
-					"please_leave_my_blog_alone_sir",
-					{ expiresIn: "1h" }
-				);
+				token = jwt.sign({ creatorId: data[0].id }, `${process.env.JWT_KEY}`, {
+					expiresIn: "1h",
+				});
 			} catch (err) {
 				return next(
 					new HttpError("Could not log in, please try again later."),

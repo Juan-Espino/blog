@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const db = require("../database/db");
+const fs = require("fs");
 
 //controller that returns all articles in the database
 const getArticles = async (req, res, next) => {
@@ -108,19 +109,37 @@ const patchArticle = async (req, res, next) => {
 //controller for DELETING an article
 const deleteArticle = async (req, res, next) => {
 	const articleId = req.params.aid;
-	const creatorId = req.body.creatorId;
+	const creatorId = req.userData.creatorId;
 
-	const deleteArticle = `DELETE FROM articles WHERE id = ${articleId} AND
+	//select article find, save image path, delete article & image
+	const selectArticle = `SELECT * FROM articles WHERE id=${articleId} AND
 	creatorId=${creatorId}`;
-	db.query(deleteArticle, (err, data) => {
-		if (err) {
+	db.query(selectArticle, (err, data) => {
+		if (err || data.length < 1) {
 			const error = new HttpError(
 				"Error deleting article please try again",
 				500
 			);
 			return next(error);
+		} else {
+			//delete image
+			const imagePath = data[0].img;
+			fs.unlink(imagePath, (err) => {
+				console.log(err);
+			});
+			//delete article
+			const deleteArticle = `DELETE FROM articles WHERE id = ${articleId}`;
+			db.query(deleteArticle, (err, data) => {
+				if (err) {
+					const error = new HttpError(
+						"Error deleting article, please try again.",
+						500
+					);
+					return next(error);
+				}
+			});
 		}
-		return res.status(200).json(data);
+		return res.status(200).json({ message: "deleted place" });
 	});
 };
 
