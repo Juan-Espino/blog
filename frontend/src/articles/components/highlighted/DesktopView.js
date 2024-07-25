@@ -98,7 +98,7 @@ const DesktopView = (props) => {
 		<div className={`${styles["desktop-view"]}`}>
 			<div className={`${styles["article-hero"]}`}>
 				<img
-					src={process.env.REACT_APP_ASSET_URL + "/" + props.article.img}
+					src={props.article.img}
 					alt={props.article.title}
 					className={`${styles["article-img"]}`}
 				/>

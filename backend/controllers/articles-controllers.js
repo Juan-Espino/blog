@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const db = require("../database/db");
 const fs = require("fs");
+const imgbbUploader = require("imgbb-uploader");
 
 //controller that returns all articles in the database
 const getArticles = async (req, res, next) => {
@@ -42,22 +43,50 @@ const postArticle = async (req, res, next) => {
 			const error = new HttpError("Error, you are not a creator", 401);
 			return next(error);
 		} else {
-			//create article in database
-			const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
-			const values = [title, paragraph, req.file.path, creatorId];
-			console.log(req.file.path);
+			//create image in imgbb
+			imgbbUploader(`${process.env.IMGBB_KEY}`, req.file.path)
+				.then((response) => {
+					//delete image in api
+					fs.unlink(req.file.path, (err) => {
+						console.log(err);
+					});
+					console.log(response.image.url);
 
-			db.query(insertArticle, [values], (err, data) => {
-				if (err) {
-					const error = new HttpError(
-						"Could not insert article to the database, please try again.",
-						500
-					);
-					return next(error);
-				}
-			});
+					//create article in database including url to image
+					const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
+					const values = [title, paragraph, response.image.url, creatorId];
+					console.log(response.image.url);
+
+					db.query(insertArticle, [values], (err, data) => {
+						if (err) {
+							const error = new HttpError(
+								"Could not insert article to the database, please try again.",
+								500
+							);
+							return next(error);
+						}
+					});
+					return res.status(201).json(data);
+				})
+				.catch((err) => {
+					return next(err);
+				});
+
+			// //create article in database including url to image
+			// const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
+			// const values = [title, paragraph, req.file.path, creatorId];
+			// console.log(req.file.path);
+
+			// db.query(insertArticle, [values], (err, data) => {
+			// 	if (err) {
+			// 		const error = new HttpError(
+			// 			"Could not insert article to the database, please try again.",
+			// 			500
+			// 		);
+			// 		return next(error);
+			// 	}
+			// });
 		}
-		return res.status(201).json(data);
 	});
 };
 
