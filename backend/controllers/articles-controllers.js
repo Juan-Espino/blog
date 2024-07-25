@@ -71,21 +71,6 @@ const postArticle = async (req, res, next) => {
 				.catch((err) => {
 					return next(err);
 				});
-
-			// //create article in database including url to image
-			// const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
-			// const values = [title, paragraph, req.file.path, creatorId];
-			// console.log(req.file.path);
-
-			// db.query(insertArticle, [values], (err, data) => {
-			// 	if (err) {
-			// 		const error = new HttpError(
-			// 			"Could not insert article to the database, please try again.",
-			// 			500
-			// 		);
-			// 		return next(error);
-			// 	}
-			// });
 		}
 	});
 };
