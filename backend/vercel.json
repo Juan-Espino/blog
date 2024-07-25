@@ -1,13 +1,4 @@
 {
 	"version": 2,
-	"rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-	"routes": [
-		{
-			"src": "/(.*)",
-			"dest": "./index.js",
-			"headers": {
-				"Access-Control-Allow-Origin": "*"
-			}
-		}
-	]
+	"rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
