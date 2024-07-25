@@ -1,2 +1,2 @@
 # blog
-My very own personal blog site build using React, Node.js, Mongodb, 
+My very own personal blog site build using React, Node.js, Mysql, 
