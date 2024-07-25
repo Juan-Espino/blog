@@ -50,7 +50,6 @@ const postArticle = async (req, res, next) => {
 					fs.unlink(req.file.path, (err) => {
 						console.log(err);
 					});
-					console.log(response.image.url);
 
 					//create article in database including url to image
 					const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;

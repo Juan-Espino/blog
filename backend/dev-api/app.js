@@ -20,7 +20,7 @@ app.use(
 
 //headers
 app.use((req, res, next) => {
-	//allows any domain to sendz a request
+	//allows any domain to send a request
 	res.setHeader("Access-Control-Allow-Origin", "*");
 
 	res.setHeader(
