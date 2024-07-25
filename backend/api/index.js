@@ -20,8 +20,9 @@ app.use(
 
 //headers
 app.use((req, res, next) => {
-	//allows any domain to sendz a request
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	//allows any domain to send a request
+	res.setHeader("Access-Control-Allow-Origin", "*");
 
 	res.setHeader(
 		"Access-Control-Allow-Headers",
