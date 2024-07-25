@@ -4,9 +4,9 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const express = require("express");
 
-const articlesRoutes = require("./routes/articles-routes");
-const usersRoutes = require("./routes/users-routes");
-const HttpError = require("./models/http-error");
+const articlesRoutes = require("../routes/articles-routes");
+const usersRoutes = require("../routes/users-routes");
+const HttpError = require("../models/http-error");
 
 const port = 5000;
 const app = express();
