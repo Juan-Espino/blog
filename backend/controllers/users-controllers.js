@@ -6,59 +6,60 @@ const jwt = require("jsonwebtoken");
 
 //constroller for signing up users
 const signup = async (req, res, next) => {
-	const errors = validationResult(req);
-	if (!errors.isEmpty()) {
-		return next(new HttpError("Invalid input, please check your data", 400));
-	}
+	// const errors = validationResult(req);
+	// if (!errors.isEmpty()) {
+	// 	return next(new HttpError("Invalid input, please check your data", 400));
+	// }
 
-	const { email, password } = req.body;
+	// const { email, password } = req.body;
 
-	//check no other user with same email
-	const checkExistingUser = `SELECT * FROM users WHERE email='${email}'`;
-	db.query(checkExistingUser, async (err, data) => {
-		if (err) {
-			const error = new HttpError(
-				"Error accessing database, please try again.",
-				500
-			);
-			return next(error);
-		}
-		if (data.length > 0) {
-			return next(new HttpError("Error! User email already exist.", 401));
-		} else {
-			//hash password
-			let hashedPassword;
-			try {
-				hashedPassword = await bcrypt.hash(password, 12);
-			} catch (err) {
-				const error = new HttpError(
-					"Error creating user, please try again.",
-					500
-				);
-				return next(error);
-			}
+	// //check no other user with same email
+	// const checkExistingUser = `SELECT * FROM users WHERE email='${email}'`;
+	// db.query(checkExistingUser, async (err, data) => {
+	// 	if (err) {
+	// 		const error = new HttpError(
+	// 			"Error accessing database, please try again.",
+	// 			500
+	// 		);
+	// 		return next(error);
+	// 	}
+	// 	if (data.length > 0) {
+	// 		return next(new HttpError("Error! User email already exist.", 401));
+	// 	} else {
+	// 		//hash password
+	// 		let hashedPassword;
+	// 		try {
+	// 			hashedPassword = await bcrypt.hash(password, 12);
+	// 		} catch (err) {
+	// 			const error = new HttpError(
+	// 				"Error creating user, please try again.",
+	// 				500
+	// 			);
+	// 			return next(error);
+	// 		}
 
-			//insert new user to database
-			const inserNewUser = "INSERT INTO users (email, pass) VALUES(?)";
-			const values = [email, hashedPassword];
-			db.query(inserNewUser, [values], (err, data) => {
-				if (err) {
-					const error = new HttpError(
-						"Error inserting new user to database, please try again.",
-						500
-					);
-					return next(error);
-				}
+	// 		//insert new user to database
+	// 		const inserNewUser = "INSERT INTO users (email, pass) VALUES(?)";
+	// 		const values = [email, hashedPassword];
+	// 		db.query(inserNewUser, [values], (err, data) => {
+	// 			if (err) {
+	// 				const error = new HttpError(
+	// 					"Error inserting new user to database, please try again.",
+	// 					500
+	// 				);
+	// 				return next(error);
+	// 			}
 
-				console.log("success");
-			});
+	// 			console.log("success");
+	// 		});
 
-			/*
-			add token 
-			*/
-			res.status(201).json("success");
-		}
-	});
+	// 		/*
+	// 		add token
+	// 		*/
+	// 		res.status(201).json("success");
+	// 	}
+	// });
+	res.status(501).json("Not available at this time.");
 };
 
 //controller for logging in users
