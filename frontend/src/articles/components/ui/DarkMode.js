@@ -14,9 +14,9 @@ const DarkMode = () => {
 
 	const toggleTheme = (e) => {
 		if (e.target.checked) {
-			setDarkMode();
-		} else {
 			setLightMode();
+		} else {
+			setDarkMode();
 		}
 	};
 
@@ -36,7 +36,7 @@ const DarkMode = () => {
 					className={`${styles["slider-input"]}`}
 					id="checkbox"
 					onChange={toggleTheme}
-					defaultChecked={selectedTheme === "dark"}
+					defaultChecked={selectedTheme === "light"}
 				/>
 				<div className={`${styles["slider"]}`}></div>
 			</label>
