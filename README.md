@@ -40,7 +40,7 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>View Site</strong></a>
+    <a href="https://blog-frontend-olive-seven.vercel.app/"><strong>View Site</strong></a>
   </p>
 </div>
 
