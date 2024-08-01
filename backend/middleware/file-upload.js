@@ -12,7 +12,7 @@ const fileUpload = multer({
 	storage: multer.diskStorage({
 		destination: (req, file, cb) => {
 			// cb(null, "uploads/images");
-			//production temp folder
+			//production folder for temp files
 			cb(null, "../../tmp/");
 		},
 		filename: (req, file, cb) => {
