@@ -2,6 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 
 import Button from "./Button";
 
+import { generateUploadButton } from "@uploadthing/react";
+
+export const UploadButton = generateUploadButton({
+	url: "https://your-server.com/api/uploadthing",
+});
+// ...
+
 import styles from "./ImageUpload.module.css";
 const ImageUpload = (props) => {
 	const [file, setFile] = useState();

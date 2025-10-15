@@ -6,6 +6,8 @@ const router = express.Router();
 const checkAuth = require("../middleware/check-auth");
 const articlesController = require("../controllers/articles-controllers");
 const fileUpload = require("../middleware/file-upload");
+const { createRouteHandler } = require("uploadthing/express");
+const { uploadRouter } = require("../middleware/uploadthing");
 
 router.get("/", articlesController.getArticles);
 
@@ -15,7 +17,10 @@ router.use(checkAuth);
 router.post(
 	"/",
 	fileUpload.single("image"),
-	[check("title").not().isEmpty(), check("paragraph").isLength({ min: 300 })],
+	createRouteHandler({
+		router: uploadRouter,
+	}),
+	[(check("title").not().isEmpty(), check("paragraph").isLength({ min: 300 }))],
 	articlesController.postArticle
 );
 

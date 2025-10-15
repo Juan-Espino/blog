@@ -44,32 +44,53 @@ const postArticle = async (req, res, next) => {
 			return next(error);
 		} else {
 			//create image in imgbb
-			imgbbUploader(`${process.env.IMGBB_KEY}`, req.file.path)
-				.then((response) => {
-					//delete image in api
-					fs.unlink(req.file.path, (err) => {
-						console.log(err);
-					});
+			// imgbbUploader(`${process.env.IMGBB_KEY}`, req.file.path)
+			// 	.then((response) => {
+			// 		//delete image in api
+			// 		fs.unlink(req.file.path, (err) => {
+			// 			console.log(err);
+			// 		});
 
-					//create article in database including url to image
-					const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
-					const values = [title, paragraph, response.image.url, creatorId];
-					console.log(response.image.url);
+			// 		//create article in database including url to image
+			// 		const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
+			// 		const values = [title, paragraph, response.image.url, creatorId];
+			// 		console.log(response.image.url);
 
-					db.query(insertArticle, [values], (err, data) => {
-						if (err) {
-							const error = new HttpError(
-								"Could not insert article to the database, please try again.",
-								500
-							);
-							return next(error);
-						}
-					});
-					return res.status(201).json(data);
-				})
-				.catch((err) => {
-					return next(err);
-				});
+			// 		db.query(insertArticle, [values], (err, data) => {
+			// 			if (err) {
+			// 				const error = new HttpError(
+			// 					"Could not insert article to the database, please try again.",
+			// 					500
+			// 				);
+			// 				return next(error);
+			// 			}
+			// 		});
+			// 		return res.status(201).json(data);
+			// 	})
+			// 	.catch((err) => {
+			// 		return next(err);
+			// 	});
+
+			//tester
+			//for
+			//uploadthing
+			//**Adding local file for testing */
+			console.log(req);
+			//
+			//create article in database including url to image
+			const insertArticle = `INSERT INTO articles (title, paragraph, img, creatorId) VALUES (?)`;
+			const values = [title, paragraph, req.file.path, creatorId];
+
+			db.query(insertArticle, [values], (err, data) => {
+				if (err) {
+					const error = new HttpError(
+						"Could not insert article to the database, please try again.",
+						500
+					);
+					return next(error);
+				}
+			});
+			return res.status(201).json(data);
 		}
 	});
 };
